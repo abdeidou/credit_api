@@ -1,4 +1,5 @@
 import json
+#import flask
 from flask import Flask, request
 import pandas as pd
 import pickle
@@ -36,6 +37,9 @@ def predict():
 
 if __name__ == '__main__':
     #app.run(host='0.0.0.0', port=1111, debug=True)
-    app.run(debug=True)
+    #app.run(debug=True)
+    from waitress import serve
+    serve(app, host="0.0.0.0", port=8080)
 
-#python flask.py
+
+#python model_data.py
