@@ -4,7 +4,7 @@ import streamlit as st
 import requests
 import subprocess
 
-subprocess.run(["python", "model_data.py"])
+
 
 # session state
 if 'predict' not in st.session_state:
@@ -15,7 +15,12 @@ if 'customer_data' not in st.session_state:
     st.session_state['customer_data'] = []
 if 'customer_id' not in st.session_state:
     st.session_state['customer_id'] = -1
+if 'model_data' not in st.session_state:
+    st.session_state['model_data'] = False
 
+if st.session_state['model_data'] == False:
+    subprocess.run(["python", "model_data.py"])
+    st.session_state['model_data'] = True
 # buttons methods
 def predict_button():
     st.session_state['predict'] = True
@@ -33,7 +38,9 @@ last_name = st.sidebar.text_input("Prénom", '')
 customer_id = st.sidebar.text_input("Identifiant*", '')
 if st.sidebar.button('Chercher', on_click=search_button):
     st.session_state['customer_id'] = customer_id
-    response = requests.get("http://localhost:1111/customer_data", params={"customer_id": customer_id}).json()
+
+
+    response = requests.get("http://localhost:5000/customer_data", params={"customer_id": customer_id}).json()
     st.session_state['customer_data'] = pd.read_json(response['customer_data'], dtype={'SK_ID_CURR': str})
     if st.session_state['customer_data'].empty:
         st.sidebar.write(":red[Client non trouvé]")
@@ -49,7 +56,7 @@ if st.session_state['customer_found']:
     st.write(st.session_state['customer_data'])
     st.button('Prédire', on_click=predict_button)
     if st.session_state['predict']:
-        response = requests.get("http://localhost:1111/predict", params={"customer_id": customer_id}).json()
+        response = requests.get("http://localhost:5000/predict", params={"customer_id": customer_id}).json()
         st.session_state['customer_predict'] = response['customer_predict']
         predict = {'Bon client': [str(round(100 * st.session_state['customer_predict'][0][0], 1)) + '%'],
                    'Mauvais client': [str(round(100 * st.session_state['customer_predict'][0][1], 1)) + '%']}

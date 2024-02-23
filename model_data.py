@@ -35,6 +35,7 @@ def predict():
     return json.dumps(response)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=1111, debug=True)
+    #app.run(host='0.0.0.0', port=1111, debug=True)
+    app.run(debug=True)
 
 #python flask.py
