@@ -39,8 +39,6 @@ last_name = st.sidebar.text_input("Prénom", '')
 customer_id = st.sidebar.text_input("Identifiant*", '')
 if st.sidebar.button('Chercher', on_click=search_button):
     st.session_state['customer_id'] = customer_id
-
-
     response = requests.get("http://localhost:8080/customer_data", params={"customer_id": customer_id}).json()
     st.session_state['customer_data'] = pd.read_json(response['customer_data'], dtype={'SK_ID_CURR': str})
     if st.session_state['customer_data'].empty:
@@ -71,13 +69,10 @@ if st.session_state['customer_found']:
                      unsafe_allow_html=True)
             st.write(f'<p style="color:red;">{perc_predict}</p>',
                      unsafe_allow_html=True)
-        #predict = {'Bon client': [str(round(100 * st.session_state['customer_predict'][0][0], 1)) + '%'],
-        #           'Mauvais client': [str(round(100 * st.session_state['customer_predict'][0][1], 1)) + '%']}
-        #df_predict = pd.DataFrame(predict)
-        #st.dataframe(df_predict, hide_index=True)
 else:
     st.image('./logo.png')
-    st.write("Application de scoring crédit pour calculer la probabilité qu’un client rembourse son\
-             crédit à la consommation pour des personnes ayant peu ou pas du tout d'historique de prêt.")
-
+    intro = "Ceci est une maquette d'application de scoring crédit pour calculer la probabilité qu’un client rembourse son\
+             crédit à la consommation pour des personnes ayant peu ou pas du tout d'historique de prêt."
+    st.write(f'<p style="font-size:26px; color:red;">{intro}</p>',
+             unsafe_allow_html=True)
 # streamlit run main.py
