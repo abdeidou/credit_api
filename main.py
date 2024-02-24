@@ -3,7 +3,7 @@ import pandas as pd
 import streamlit as st
 import requests
 import subprocess
-
+import os, sys
 
 
 # session state
@@ -17,12 +17,10 @@ if 'customer_id' not in st.session_state:
     st.session_state['customer_id'] = -1
 if 'model_data' not in st.session_state:
     st.session_state['model_data'] = False
-import os, sys
+
 if st.session_state['model_data'] == False:
-    #subprocess.run(["python", "model_data.py"])
-    #subprocess.Popen(['/home/appuser/venv/bin/python', 'model_data.py'], close_fds=True)
-    job = [f'{sys.executable}', os.path.join('.', 'model_data.py'), 'localhost', '8080']
-    subprocess.Popen(job)
+    model_data = [f'{sys.executable}', os.path.join('.', 'model_data.py'), 'localhost', '8080']
+    subprocess.Popen(model_data)
     st.session_state['model_data'] = True
 # buttons methods
 def predict_button():
@@ -69,7 +67,5 @@ else:
     st.image('./logo.png')
     st.write("Application de scoring crédit pour calculer la probabilité qu’un client rembourse son\
              crédit à la consommation pour des personnes ayant peu ou pas du tout d'historique de prêt.")
-
-
 
 # streamlit run main.py

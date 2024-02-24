@@ -1,14 +1,10 @@
 import json
-#import flask
 from flask import Flask, request
 import pandas as pd
 import pickle
 
 
 app = Flask(__name__)
-
-def flask_runner():
-    app.run(port=8080)
 
 # read csv file
 data_test = pd.read_csv("./application_test.csv")
@@ -18,7 +14,6 @@ customers_data_ohe = data_test_ohe
 
 # load model
 lgbm = pickle.load(open('./best_model.pickle', 'rb'))
-
 
 @app.route('/customer_data', methods=['GET'])
 def customer_data():
@@ -38,18 +33,18 @@ def predict():
     response = {'customer_predict': lgbm.predict_proba(customer_row_ohe).tolist()}
     return json.dumps(response)
 
-#if __name__ == '__main__':
-#    #app.run(host='0.0.0.0', port=1111, debug=True)
-#    #app.run(debug=True)
-#    from waitress import serve
-#   serve(app, host="0.0.0.0", port=8080)
-
-
+def flask_runner():
+    app.run(port=8080)
 
 
 if __name__ == '__main__':
     flask_runner()
 
+#if __name__ == '__main__':
+#    #app.run(host='0.0.0.0', port=1111, debug=True)
+#    #app.run(debug=True)
+#    from waitress import serve
+#   serve(app, host="0.0.0.0", port=8080)
 
 
 #python model_data.py
