@@ -59,10 +59,14 @@ if st.session_state['customer_found']:
     if st.session_state['predict']:
         response = requests.get("http://localhost:8080/predict", params={"customer_id": customer_id}).json()
         st.session_state['customer_predict'] = response['customer_predict']
-        predict = {'Bon client': [str(round(100 * st.session_state['customer_predict'][0][0], 1)) + '%'],
-                   'Mauvais client': [str(round(100 * st.session_state['customer_predict'][0][1], 1)) + '%']}
-        df_predict = pd.DataFrame(predict)
-        st.dataframe(df_predict, hide_index=True)
+        if st.session_state['customer_predict'][0][1] < st.session_state['customer_predict'][0][0]:
+            st.write('bon client')
+        else:
+            st.write('mauvais client')
+        #predict = {'Bon client': [str(round(100 * st.session_state['customer_predict'][0][0], 1)) + '%'],
+        #           'Mauvais client': [str(round(100 * st.session_state['customer_predict'][0][1], 1)) + '%']}
+        #df_predict = pd.DataFrame(predict)
+        #st.dataframe(df_predict, hide_index=True)
 else:
     st.image('./logo.png')
     st.write("Application de scoring crédit pour calculer la probabilité qu’un client rembourse son\
