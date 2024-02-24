@@ -5,10 +5,9 @@ import pandas as pd
 import pickle
 
 
-#app = Flask(__name__)
+app = Flask(__name__)
 
 def flask_runner():
-    app = Flask(__name__)
     app.run(port=8080)
 
 # read csv file
