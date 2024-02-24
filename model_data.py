@@ -1,11 +1,11 @@
 import json
 #import flask
-from flask import Flask, request
+#from flask import Flask, request
 import pandas as pd
 import pickle
 
 
-app = Flask(__name__)
+app = flask.Flask(__name__)
 
 # read csv file
 data_test = pd.read_csv("./application_test.csv")
@@ -19,7 +19,7 @@ lgbm = pickle.load(open('./best_model.pickle', 'rb'))
 
 @app.route('/customer_data', methods=['GET'])
 def customer_data():
-    customer_id = request.args.get("customer_id")
+    customer_id = flask.request.args.get("customer_id")
     customer_row = customers_data[customers_data['SK_ID_CURR']==int(customer_id)]
     customer_index = customer_row.index
     response = {'customer_data': customer_row.to_json()}
@@ -27,7 +27,7 @@ def customer_data():
 
 @app.route('/predict', methods=['GET'])
 def predict():
-    customer_id = request.args.get("customer_id")
+    customer_id = flask.request.args.get("customer_id")
     customer_row = customers_data[customers_data['SK_ID_CURR'] == int(customer_id)]
     customer_index = customer_row.index
     customer_row_ohe = customers_data_ohe.iloc[customer_index].drop(columns=['SK_ID_CURR'], axis=1)
