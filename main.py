@@ -61,7 +61,9 @@ if st.session_state['customer_found']:
         st.session_state['customer_predict'] = response['customer_predict']
         if st.session_state['customer_predict'][0][1] < st.session_state['customer_predict'][0][0]:
             message_predict = "Bon client" + "\n\n" + str(round(100 * st.session_state['customer_predict'][0][0], 1)) + "%"
-            st.write(f":green[{message_predict}]")
+            #st.write(f":green[{message_predict}]")
+            st.write(f'<p style="color:green;">{message_predict}</p>',
+                     unsafe_allow_html=True)
         else:
             message_predict = "Mauvais client" + "\n\n" + str(
                 round(100 * st.session_state['customer_predict'][0][1], 1)) + "%"
