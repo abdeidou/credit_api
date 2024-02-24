@@ -6,6 +6,7 @@ import subprocess
 import os, sys
 
 
+
 # session state
 if 'predict' not in st.session_state:
     st.session_state['predict'] = False
@@ -17,6 +18,8 @@ if 'customer_id' not in st.session_state:
     st.session_state['customer_id'] = -1
 if 'model_data' not in st.session_state:
     st.session_state['model_data'] = False
+
+st.write(st.session_state['predict'])
 
 if st.session_state['model_data'] == False:
     model_data = [f'{sys.executable}', os.path.join('.', 'model_data.py')] #, 'localhost', '8080'
