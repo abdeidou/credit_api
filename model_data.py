@@ -1,15 +1,15 @@
 import json
 #import flask
 #from flask import Flask, request
-import pandas as pd
+#import pandas as pd
 import pickle
 
 
 app = flask.Flask(__name__)
 
 # read csv file
-data_test = pd.read_csv("./application_test.csv")
-data_test_ohe = pd.read_csv("./application_test_ohe.csv")
+data_test = pandas.read_csv("./application_test.csv")
+data_test_ohe = pandas.read_csv("./application_test_ohe.csv")
 customers_data = data_test
 customers_data_ohe = data_test_ohe
 
