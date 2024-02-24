@@ -19,7 +19,7 @@ if 'model_data' not in st.session_state:
     st.session_state['model_data'] = False
 
 if st.session_state['model_data'] == False:
-    model_data = [f'{sys.executable}', os.path.join('.', 'model_data.py'), 'localhost', '8080']
+    model_data = [f'{sys.executable}', os.path.join('.', 'model_data.py')] #, 'localhost', '8080'
     subprocess.Popen(model_data)
     st.session_state['model_data'] = True
 # buttons methods
