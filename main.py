@@ -61,15 +61,16 @@ if st.session_state['customer_found']:
         st.session_state['customer_predict'] = response['customer_predict']
         if st.session_state['customer_predict'][0][1] < st.session_state['customer_predict'][0][0]:
             perc_predict = str(round(100 * st.session_state['customer_predict'][0][0], 1)) + "%"
-            #st.write(f":green[{message_predict}]")
-            st.write(f'<p style="color:green;">"Bon client"</p>',
+            st.write(f'<p style="color:green;">Bon client</p>',
                      unsafe_allow_html=True)
             st.write(f'<p style="color:green;">{perc_predict}</p>',
                      unsafe_allow_html=True)
         else:
-            message_predict = "Mauvais client" + "\n\n" + str(
-                round(100 * st.session_state['customer_predict'][0][1], 1)) + "%"
-            st.write(f":red[{message_predict}]")
+            perc_predict = str(round(100 * st.session_state['customer_predict'][0][0], 1)) + "%"
+            st.write(f'<p style="color:red;">Mauvais client</p>',
+                     unsafe_allow_html=True)
+            st.write(f'<p style="color:red;">{perc_predict}</p>',
+                     unsafe_allow_html=True)
         #predict = {'Bon client': [str(round(100 * st.session_state['customer_predict'][0][0], 1)) + '%'],
         #           'Mauvais client': [str(round(100 * st.session_state['customer_predict'][0][1], 1)) + '%']}
         #df_predict = pd.DataFrame(predict)
