@@ -5,7 +5,10 @@ import pandas as pd
 import pickle
 
 
-app = Flask(__name__)
+#app = Flask(__name__)
+
+def flask_runner():
+    app = Flask(__name__)
 
 # read csv file
 data_test = pd.read_csv("./application_test.csv")
@@ -35,11 +38,18 @@ def predict():
     response = {'customer_predict': lgbm.predict_proba(customer_row_ohe).tolist()}
     return json.dumps(response)
 
+#if __name__ == '__main__':
+#    #app.run(host='0.0.0.0', port=1111, debug=True)
+#    #app.run(debug=True)
+#    from waitress import serve
+#   serve(app, host="0.0.0.0", port=8080)
+
+
+app.run(port=8080)
+
 if __name__ == '__main__':
-    #app.run(host='0.0.0.0', port=1111, debug=True)
-    #app.run(debug=True)
-    from waitress import serve
-    serve(app, host="0.0.0.0", port=8080)
+    flask_runner()
+
 
 
 #python model_data.py
