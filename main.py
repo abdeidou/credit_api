@@ -60,9 +60,11 @@ if st.session_state['customer_found']:
         response = requests.get("http://localhost:8080/predict", params={"customer_id": customer_id}).json()
         st.session_state['customer_predict'] = response['customer_predict']
         if st.session_state['customer_predict'][0][1] < st.session_state['customer_predict'][0][0]:
-            message_predict = "Bon client" + "\n\n" + str(round(100 * st.session_state['customer_predict'][0][0], 1)) + "%"
+            perc_predict = str(round(100 * st.session_state['customer_predict'][0][0], 1)) + "%"
             #st.write(f":green[{message_predict}]")
-            st.write(f'<p style="color:green;">{message_predict}</p>',
+            st.write(f'<p style="color:green;">"Bon client"</p>',
+                     unsafe_allow_html=True)
+            st.write(f'<p style="color:green;">{perc_predict}</p>',
                      unsafe_allow_html=True)
         else:
             message_predict = "Mauvais client" + "\n\n" + str(
