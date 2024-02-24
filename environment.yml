@@ -2,10 +2,5 @@ channles:
   - conda-forge
 dependencies:
   - flask
-  - json
   - pandas
-  - pickle
   - streamlit
-  - requests
-  - subprocess
-  - lightgbm
