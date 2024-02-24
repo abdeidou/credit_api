@@ -9,6 +9,7 @@ import pickle
 
 def flask_runner():
     app = Flask(__name__)
+    app.run(port=8080)
 
 # read csv file
 data_test = pd.read_csv("./application_test.csv")
@@ -45,7 +46,7 @@ def predict():
 #   serve(app, host="0.0.0.0", port=8080)
 
 
-app.run(port=8080)
+
 
 if __name__ == '__main__':
     flask_runner()
