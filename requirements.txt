@@ -1,0 +1,8 @@
+flask
+json
+pandas
+pickle
+streamlit
+requests
+subprocess
+lightgbm
