@@ -73,6 +73,6 @@ else:
     st.image('./logo.png')
     intro = "Ceci est une maquette d'application de scoring crédit pour calculer la probabilité qu’un client rembourse son\
              crédit à la consommation pour des personnes ayant peu ou pas du tout d'historique de prêt."
-    st.write(f'<p style="font-size:26px; color:red;">{intro}</p>',
+    st.write(f'<p style="font-size:26px; color:blue;">{intro}</p>',
              unsafe_allow_html=True)
 # streamlit run main.py
