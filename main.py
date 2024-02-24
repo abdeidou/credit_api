@@ -19,7 +19,8 @@ if 'model_data' not in st.session_state:
     st.session_state['model_data'] = False
 
 if st.session_state['model_data'] == False:
-    subprocess.run(["python", "model_data.py"])
+    #subprocess.run(["python", "model_data.py"])
+    subprocess.Popen(['/home/appuser/venv/bin/python', 'model_data.py'], close_fds=True)
     st.session_state['model_data'] = True
 # buttons methods
 def predict_button():
