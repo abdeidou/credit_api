@@ -33,9 +33,15 @@ def predict():
     response = {'customer_predict': lgbm.predict_proba(customer_row_ohe).tolist()}
     return json.dumps(response)
 
-def flask_runner():
-    app.run(port=8080)
+#def flask_runner():
+#    app.run(port=8080)
 
+def flask_runner():
+    from waitress import serve
+    serve(app, host="0.0.0.0", port=8080)
+
+#if __name__ == '__main__':
+#    flask_runner()
 
 if __name__ == '__main__':
     flask_runner()
