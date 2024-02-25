@@ -61,13 +61,13 @@ if st.session_state['customer_found']:
         st.session_state['customer_predict'] = response['customer_predict']
         if st.session_state['customer_predict'][0][1] < st.session_state['customer_predict'][0][0]:
             perc_predict = str(round(100 * st.session_state['customer_predict'][0][0], 1)) + "%"
-            st.write(f'<p style="color:green;">Bon client</p>',
+            st.write(f'<p style="color:green;">Prêt accordé</p>',
                      unsafe_allow_html=True)
             st.write(f'<p style="color:green;">{perc_predict}</p>',
                      unsafe_allow_html=True)
         else:
             perc_predict = str(round(100 * st.session_state['customer_predict'][0][0], 1)) + "%"
-            st.write(f'<p style="color:red;">Mauvais client</p>',
+            st.write(f'<p style="color:red;">Prêt non accordé</p>',
                      unsafe_allow_html=True)
             st.write(f'<p style="color:red;">{perc_predict}</p>',
                      unsafe_allow_html=True)
