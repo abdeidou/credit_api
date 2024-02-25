@@ -19,7 +19,6 @@ if 'customer_id' not in st.session_state:
 if 'model_data' not in st.session_state:
     st.session_state['model_data'] = False
 
-st.write(st.session_state['predict'])
 
 if st.session_state['model_data'] == False:
     model_data = [f'{sys.executable}', os.path.join('.', 'model_data.py')] #, 'localhost', '8080'
