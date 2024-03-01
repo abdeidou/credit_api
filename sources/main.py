@@ -41,21 +41,24 @@ def handle_search_button_click():
         st.session_state['customer_found'] = True
 
 # Function to handle predict button click
+
 def handle_predict_button_click():
     st.session_state['predict'] = True
-    response = requests.get("http://localhost:8080/predict", params={"customer_id": st.session_state['customer_id']}).json()
-    customer_predict = response['customer_predict']
+    if st.session_state['predict']:
+        response = requests.get("http://localhost:8080/predict",
+                                params={"customer_id": st.session_state['customer_id']}).json()
+        customer_predict = response['customer_predict']
 
-    if customer_predict[0][1] < customer_predict[0][0]:
-        color = "green"
-        result = "Prêt accordé"
-    else:
-        color = "red"
-        result = "Prêt refusé"
+        if customer_predict[0][1] < customer_predict[0][0]:
+            color = "green"
+            result = "Prêt accordé"
+        else:
+            color = "red"
+            result = "Prêt refusé"
 
-    perc_predict = round(100 * customer_predict[0][0], 1)
-    st.write(f'<p style="color:{color};">{result}</p>', unsafe_allow_html=True)
-    st.write(f'<p style="color:{color};">{perc_predict}%</p>', unsafe_allow_html=True)
+        perc_predict = round(100 * customer_predict[0][0], 1)
+        st.write(f'<p style="color:{color};">{result}</p>', unsafe_allow_html=True)
+        st.write(f'<p style="color:{color};">{perc_predict}%</p>', unsafe_allow_html=True)
 
 # Initialize session state
 initialize_session_state()
@@ -79,7 +82,7 @@ if st.session_state['customer_found']:
     st.subheader('Données client')
     st.write(st.session_state['customer_data'])
     if st.button('Prédire', on_click=handle_predict_button_click):
-        #handle_predict_button_click()
+        handle_predict_button_click()
 else:
     st.image('./data/logo.png')
     intro = "Ceci est une maquette d'application de scoring crédit pour calculer la probabilité qu’un client rembourse son\
