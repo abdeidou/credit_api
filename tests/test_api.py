@@ -5,16 +5,16 @@ from sources.model_data import customers_data, customers_data_ohe, lgbm
 from sources.model_data import app
 
 
-@pytest.fixture()
+@pytest.fixture(scope="module")
 def client():
     with app.test_client() as client:
         return client
 
-@pytest.fixture()
+@pytest.fixture(scope="module")
 def api_url():
     return "http://0.0.0.0:8080"
 
-@pytest.fixture()
+@pytest.fixture(scope="module")
 def customer_id():
     return 100028
 
