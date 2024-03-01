@@ -28,10 +28,10 @@ def start_model_data_subprocess():
 
 # Function to handle search button click
 def handle_search_button_click():
-    st.session_state['predict'] = False
-    st.session_state['customer_found'] = False
-    st.session_state['customer_id'] = st.session_state['customer_id_input']
+    initialize_session_state()
 
+
+def handle_search():
     response = requests.get("http://localhost:8080/customer_data", params={"customer_id": st.session_state['customer_id']}).json()
     st.session_state['customer_data'] = pd.read_json(response['customer_data'], dtype={'SK_ID_CURR': str})
 
@@ -44,6 +44,8 @@ def handle_search_button_click():
 
 def handle_predict_button_click():
     st.session_state['predict'] = True
+
+def handle_predict():
     if st.session_state['predict']:
         response = requests.get("http://localhost:8080/predict",
                                 params={"customer_id": st.session_state['customer_id']}).json()
@@ -72,7 +74,7 @@ st.sidebar.text_input("Nom", key='first_name_input')
 st.sidebar.text_input("Prénom", key='last_name_input')
 st.sidebar.text_input("Identifiant*", key='customer_id_input')
 if st.sidebar.button('Chercher', on_click=handle_search_button_click):
-    handle_search_button_click()
+    handle_search()
 
 # App code
 if st.session_state['customer_found']:
@@ -82,7 +84,7 @@ if st.session_state['customer_found']:
     st.subheader('Données client')
     st.write(st.session_state['customer_data'])
     if st.button('Prédire', on_click=handle_predict_button_click):
-        handle_predict_button_click()
+        handle_predict()
 else:
     st.image('./data/logo.png')
     intro = "Ceci est une maquette d'application de scoring crédit pour calculer la probabilité qu’un client rembourse son\
