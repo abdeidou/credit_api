@@ -31,7 +31,7 @@ def handle_search_button_click():
     initialize_session_state()
 
 
-def handle_search():
+def handle_search(customer_id):
     response = requests.get("http://localhost:8080/customer_data", params={"customer_id": st.session_state['customer_id']}).json()
     st.session_state['customer_data'] = pd.read_json(response['customer_data'], dtype={'SK_ID_CURR': str})
 
@@ -39,6 +39,7 @@ def handle_search():
         st.sidebar.write(":red[Client non trouvé]")
     else:
         st.session_state['customer_found'] = True
+        st.session_state['customer_id'] = customer_id
 
 # Function to handle predict button click
 
@@ -74,7 +75,7 @@ st.sidebar.text_input("Nom", key='first_name_input')
 st.sidebar.text_input("Prénom", key='last_name_input')
 st.sidebar.text_input("Identifiant*", key='customer_id_input')
 if st.sidebar.button('Chercher', on_click=handle_search_button_click):
-    handle_search()
+    handle_search(st.sidebar.customer_id_input)
 
 # App code
 if st.session_state['customer_found']:
