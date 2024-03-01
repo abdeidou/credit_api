@@ -10,6 +10,10 @@ def api_url():
     return "http://0.0.0.0:8080"
 
 @pytest.fixture(scope="module")
+def localhost():
+    return localhost
+
+@pytest.fixture(scope="module")
 def client():
     with app.test_client() as client:
         return client
