@@ -32,14 +32,15 @@ def handle_search_button_click():
 
 
 def handle_search(customer_id):
-    response = requests.get("http://localhost:8080/customer_data", params={"customer_id": st.session_state['customer_id']}).json()
-    st.session_state['customer_data'] = pd.read_json(response['customer_data'], dtype={'SK_ID_CURR': str})
+    response = requests.get("http://localhost:8080/customer_data", params={"customer_id": customer_id}).json()
+    customer_data = pd.read_json(response['customer_data'], dtype={'SK_ID_CURR': str})
 
     if st.session_state['customer_data'].empty:
         st.sidebar.write(":red[Client non trouvé]")
     else:
         st.session_state['customer_found'] = True
         st.session_state['customer_id'] = customer_id
+        st.session_state['customer_data'] = customer_data
 
 # Function to handle predict button click
 
