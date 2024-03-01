@@ -36,7 +36,7 @@ def expected_customer_predict(customer_id):
 def test_customer_data_api(client, localhost, customer_id, expected_customer_data):
     """Test the /customer_data API endpoint."""
     # Make request to API endpoint
-    with client.get(f"/customer_data", params={"customer_id": customer_id}) as response:
+    with client.get(f"/customer_data", query_string={"customer_id": customer_id}) as response:
         # Assert response status code
         assert response.status_code == 200
 
@@ -47,7 +47,7 @@ def test_customer_data_api(client, localhost, customer_id, expected_customer_dat
 def test_predict_api(client, localhost, customer_id, expected_customer_predict):
     """Test the /predict API endpoint."""
     # Make request to API endpoint
-    with client.get(f"/predict", params={"customer_id": customer_id}) as response:
+    with client.get(f"/predict", query_string={"customer_id": customer_id}) as response:
         # Assert response status code
         assert response.status_code == 200
 
