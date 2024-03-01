@@ -5,7 +5,7 @@ from sources.model_data import customers_data, customers_data_ohe, lgbm
 
 @pytest.fixture(scope="module")
 def api_url():
-    return "http://localhost:1111"
+    return "http://0.0.0.0:8080"
 
 @pytest.fixture(scope="module")
 def customer_id():
