@@ -44,6 +44,3 @@ def test_predict_api(client, customer_id, expected_customer_predict):
         # Assert response content
         response_data = json.loads(response.text)
         assert response_data['customer_predict'] == expected_customer_predict
-
-
-#scope="module"
