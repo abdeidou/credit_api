@@ -79,7 +79,7 @@ if st.session_state['customer_found']:
     st.subheader('Données client')
     st.write(st.session_state['customer_data'])
     if st.button('Prédire', on_click=handle_predict_button_click):
-        handle_predict_button_click()
+        #handle_predict_button_click()
 else:
     st.image('./data/logo.png')
     intro = "Ceci est une maquette d'application de scoring crédit pour calculer la probabilité qu’un client rembourse son\
