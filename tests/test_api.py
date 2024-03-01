@@ -44,4 +44,4 @@ def test_predict_api(api_url, customer_id, expected_customer_predict):
         assert response_data['customer_predict'] == expected_customer_predict
 
 
-#fkjfkhj
+#ldshkbkjb
