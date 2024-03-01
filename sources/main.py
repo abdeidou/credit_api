@@ -74,9 +74,9 @@ start_model_data_subprocess()
 st.sidebar.header('Informations client')
 st.sidebar.text_input("Nom", key='first_name_input')
 st.sidebar.text_input("Prénom", key='last_name_input')
-st.sidebar.text_input("Identifiant*", key='customer_id_input')
+customer_id_input = st.sidebar.text_input("Identifiant*", key='customer_id_input')
 if st.sidebar.button('Chercher', on_click=handle_search_button_click):
-    st.sidebar.write(st.sidebar.customer_id_input)
+    st.sidebar.write(st.sidebar.text_input['customer_id_input'])
     handle_search(st.sidebar.customer_id_input)
 
 
