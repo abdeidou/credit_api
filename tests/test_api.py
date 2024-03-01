@@ -1,6 +1,5 @@
 import pytest
 import json
-import requests
 from sources.model_data import customers_data, customers_data_ohe, lgbm
 from sources.model_data import app
 
