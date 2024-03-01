@@ -5,3 +5,4 @@ scikit-learn
 waitress
 pytest
 requests
+pandas
