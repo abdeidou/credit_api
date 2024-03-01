@@ -7,13 +7,13 @@ import pickle
 app = Flask(__name__)
 
 # read csv file
-data_test = pd.read_csv("./application_test.csv")
-data_test_ohe = pd.read_csv("./application_test_ohe.csv")
+data_test = pd.read_csv("./data/application_test.csv")
+data_test_ohe = pd.read_csv("./data/application_test_ohe.csv")
 customers_data = data_test
 customers_data_ohe = data_test_ohe
 
 # load model
-lgbm = pickle.load(open('./best_model.pickle', 'rb'))
+lgbm = pickle.load(open('./data/best_model.pickle', 'rb'))
 
 @app.route('/customer_data', methods=['GET'])
 def customer_data():

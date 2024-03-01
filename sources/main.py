@@ -21,7 +21,7 @@ if 'model_data' not in st.session_state:
 
 
 if st.session_state['model_data'] == False:
-    model_data = [f'{sys.executable}', os.path.join('.', 'model_data.py')] #, 'localhost', '8080'
+    model_data = [f'{sys.executable}', os.path.join('./sources', 'model_data.py')] #, 'localhost', '8080'
     subprocess.Popen(model_data)
     st.session_state['model_data'] = True
 # buttons methods
@@ -67,12 +67,12 @@ if st.session_state['customer_found']:
                      unsafe_allow_html=True)
         else:
             perc_predict = str(round(100 * st.session_state['customer_predict'][0][0], 1)) + "%"
-            st.write(f'<p style="color:red;">Prêt non accordé</p>',
+            st.write(f'<p style="color:red;">Prêt refusé</p>',
                      unsafe_allow_html=True)
             st.write(f'<p style="color:red;">{perc_predict}</p>',
                      unsafe_allow_html=True)
 else:
-    st.image('./logo.png')
+    st.image('./data/logo.png')
     intro = "Ceci est une maquette d'application de scoring crédit pour calculer la probabilité qu’un client rembourse son\
              crédit à la consommation pour des personnes ayant peu ou pas du tout d'historique de prêt."
     st.write(f'<p style="font-size:26px; color:blue;">{intro}</p>',
