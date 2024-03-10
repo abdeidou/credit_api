@@ -11,7 +11,7 @@ def client():
 
 @pytest.fixture()
 def customer_id():
-    return 100028
+    return 100038
 
 @pytest.fixture()
 def expected_customer_data(customer_id):
