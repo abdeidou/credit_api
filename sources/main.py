@@ -94,3 +94,4 @@ else:
              crédit à la consommation pour des personnes ayant peu ou pas du tout d'historique de prêt."
     st.write(f'<p style="font-size:26px; color:blue;">{intro}</p>', unsafe_allow_html=True)
 
+#test
