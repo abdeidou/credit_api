@@ -5,7 +5,7 @@ import subprocess
 import os
 import sys
 
-# Function to initialize session state variables
+# Initialiser les variables de session
 def initialize_session_state():
     session_state_defaults = {
         'predict': False,
@@ -18,7 +18,7 @@ def initialize_session_state():
         if key not in st.session_state:
             st.session_state[key] = value
 
-# Function to start model data subprocess
+# Lancer le processus model_data
 def start_model_data_subprocess():
    if not st.session_state['model_data']:
        model_data_path = os.path.join('./sources', 'model_data.py')
@@ -26,11 +26,9 @@ def start_model_data_subprocess():
        subprocess.Popen(model_data)
        st.session_state['model_data'] = True
 
-# Function to handle search button click
+# Gérer le button chercher
 def handle_search_button_click():
     initialize_session_state()
-
-
 def handle_search(customer_id_input):
     if not customer_id_input:
         st.sidebar.write(":red[Identifiant non renseigné]")
@@ -46,42 +44,31 @@ def handle_search(customer_id_input):
             st.session_state['customer_id'] = customer_id_input
             st.session_state['customer_data'] = customer_data
 
-# def handle_search(customer_id_input):
-#     st.write(customer_id_input)
-#     response = requests.get("http://localhost:5000/customer_data", params={"customer_id": customer_id_input}).json()
-#     #st.write(response)
-#     customer_data = pd.read_json(response['customer_data'], dtype={'SK_ID_CURR': str})
-#     st.write(customer_data)
-
-# Function to handle predict button click
-
+# Gérer le button predict
 def handle_predict_button_click():
     st.session_state['predict'] = True
-
 def handle_predict():
     if st.session_state['predict']:
         response = requests.get("http://localhost:5000/predict",
                                 params={"customer_id": st.session_state['customer_id']}).json()
         customer_predict = response['customer_predict']
-
         if customer_predict[0][1] < customer_predict[0][0]:
             color = "green"
             result = "Prêt accordé"
         else:
             color = "red"
             result = "Prêt refusé"
-
         perc_predict = round(100 * customer_predict[0][0], 1)
         st.write(f'<p style="color:{color};">{result}</p>', unsafe_allow_html=True)
         st.write(f'<p style="color:{color};">{perc_predict}%</p>', unsafe_allow_html=True)
 
-# Initialize session state
+# Initialiser la session
 initialize_session_state()
 
-# Start model data subprocess
+# Lancer le processus model_data
 start_model_data_subprocess()
 
-# Sidebar code
+# Gestion barre latérale
 st.sidebar.header('Informations client')
 first_name_input = st.sidebar.text_input("Nom", key='first_name_input')
 last_name_input = st.sidebar.text_input("Prénom", key='last_name_input')
@@ -89,8 +76,7 @@ customer_id_input = st.sidebar.text_input("Identifiant*", key='customer_id_input
 if st.sidebar.button('Chercher', on_click=handle_search_button_click):
     handle_search(customer_id_input)
 
-
-# App code
+# Gestion page centrale
 if st.session_state['customer_found']:
     st.write("""
     # Prédiction de remboursement
@@ -104,5 +90,3 @@ else:
     intro = "Ceci est une maquette d'application de scoring crédit pour calculer la probabilité qu’un client rembourse son\
              crédit à la consommation pour des personnes ayant peu ou pas du tout d'historique de prêt."
     st.write(f'<p style="font-size:26px; color:blue;">{intro}</p>', unsafe_allow_html=True)
-
-#test
