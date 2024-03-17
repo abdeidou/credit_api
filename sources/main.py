@@ -34,13 +34,13 @@ def handle_search_button_click():
 def handle_search(customer_id_input):
     if not customer_id_input:
         st.sidebar.write(":red[Identifiant non renseigné]")
-        st.session_state['customer_found'] = False
+        #st.session_state['customer_found'] = False
     else:
         response = requests.get("http://localhost:8080/customer_data", params={"customer_id": customer_id_input}).json()
         customer_data = pd.read_json(response['customer_data'], dtype={'SK_ID_CURR': str})
         if customer_data.empty:
             st.sidebar.write(":red[Client non trouvé]")
-            st.session_state['customer_found'] = False
+            #st.session_state['customer_found'] = False
         else:
             st.session_state['customer_found'] = True
             st.session_state['customer_id'] = customer_id_input
