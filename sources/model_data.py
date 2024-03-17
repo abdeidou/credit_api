@@ -46,11 +46,11 @@ def predict():
 if __name__ == '__main__':
     try:
         host = "0.0.0.0"
-        port = 8080
+        port = 6060
         serve(app, host="0.0.0.0", port=port)
     except OSError as e:
         if e.errno == 98:  # Address already in use
-            port = 6060
+            port = 5050
             serve(app, host="0.0.0.0", port=port)
 
 #if __name__ == '__main__':
