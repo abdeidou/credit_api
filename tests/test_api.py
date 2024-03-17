@@ -20,7 +20,7 @@ def customer_id():
 @pytest.fixture()
 def expected_customer_data(customer_id):
     """Fixture fournissant des données JSON attendues pour un customer_id."""
-    return customers_data[customers_data['SK_ID_CURR'] == customer_id].to_json()
+    return customers_data[customers_data['SK_ID_CURR'] == str(customer_id)].to_json()
 
 @pytest.fixture()
 def expected_customer_predict(customer_id):
