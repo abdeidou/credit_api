@@ -38,10 +38,10 @@ def test_customer_data_api(client, customer_id, expected_customer_data):
         # Vérifier le statut de la réponse
         assert response.status_code == 200
         # Vérifier la réponse
-        #response_data = json.loads(response.text)
-        response = response.json()
+        response_data = json.loads(response.text)
+        #response = response.json()
         customer_data = pd.read_json(response['customer_data'])
-        assert customer_data == expected_customer_data
+        assert response_data == expected_customer_data
 #
 # def test_predict_api(client, customer_id, expected_customer_predict):
 #     """Test de predict."""
