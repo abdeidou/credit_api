@@ -23,17 +23,9 @@ lgbm = load_model(model_path)
 @app.route('/customer_data', methods=['GET'])
 def customer_data():
     customer_id = request.args.get("customer_id")
-    if customer_id is None:
-        return json.dumps({"error": "Customer ID is missing"}), 400
-    try:
-        customer_id = int(customer_id)
-        customer_row = customers_data[customers_data['SK_ID_CURR'] == customer_id]
-        if customer_row.empty:
-            return json.dumps({"error": "Customer not found"}), 404
-        response = {'customer_data': customer_row.to_json()}
-        return json.dumps(response)
-    except ValueError:
-        return json.dumps({"error": "Invalid customer ID"}), 400
+    customer_row = customers_data[customers_data['SK_ID_CURR'] == customer_id]
+    response = {'customer_data': customer_row.to_json()}
+    return json.dumps(response)
 
 @app.route('/predict', methods=['GET'])
 def predict():
