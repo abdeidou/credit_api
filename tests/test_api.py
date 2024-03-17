@@ -34,11 +34,12 @@ def expected_customer_predict(customer_id):
 def test_customer_data_api(client, customer_id, expected_customer_data):
     """Test de customer_data."""
     # Faire une requête à l'API
-    with client.get(f"/customer_data", query_string={"customer_id": customer_id}).json() as response:
+    with client.get(f"/customer_data", query_string={"customer_id": customer_id}) as response:
         # Vérifier le statut de la réponse
         assert response.status_code == 200
         # Vérifier la réponse
         #response_data = json.loads(response.text)
+        response = response.json()
         customer_data = pd.read_json(response['customer_data'])
         assert customer_data == expected_customer_data
 #
