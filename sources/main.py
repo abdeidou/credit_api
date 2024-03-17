@@ -12,8 +12,7 @@ def initialize_session_state():
         'customer_found': False,
         'customer_data': [],
         'customer_id': -1,
-        'model_data': False,
-        'port': -1
+        'model_data': False
     }
     for key, value in session_state_defaults.items():
         if key not in st.session_state:
@@ -51,7 +50,7 @@ def handle_search(customer_id_input):
         st.sidebar.write(":red[Identifiant non renseigné]")
         #st.session_state['customer_found'] = False
     else:
-        response = requests.get("http://localhost:1111/customer_data", params={"customer_id": customer_id_input}).json()
+        response = requests.get("http://localhost:5000/customer_data", params={"customer_id": customer_id_input}).json()
         customer_data = pd.read_json(response['customer_data'], dtype={'SK_ID_CURR': str})
         st.write(customer_data)
         if customer_data.empty:
@@ -69,7 +68,7 @@ def handle_predict_button_click():
 
 def handle_predict():
     if st.session_state['predict']:
-        response = requests.get("http://localhost:1111/predict",
+        response = requests.get("http://localhost:5000/predict",
                                 params={"customer_id": st.session_state['customer_id']}).json()
         customer_predict = response['customer_predict']
 
