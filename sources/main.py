@@ -48,7 +48,9 @@ def handle_search_button_click():
 #             st.session_state['customer_data'] = customer_data
 
 def handle_search(customer_id_input):
+    st.write(customer_id_input)
     response = requests.get("http://localhost:5000/customer_data", params={"customer_id": customer_id_input}).json()
+    st.write(response)
     customer_data = pd.read_json(response['customer_data'], dtype={'SK_ID_CURR': str})
     st.write(customer_data)
 
