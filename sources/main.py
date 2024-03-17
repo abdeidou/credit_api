@@ -20,26 +20,26 @@ def initialize_session_state():
             st.session_state[key] = value
 
 # Function to start model data subprocess
-#def start_model_data_subprocess():
-#    if not st.session_state['model_data']:
-#        model_data_path = os.path.join('./sources', 'model_data.py')
-#        model_data = [sys.executable, model_data_path]
-#        subprocess.Popen(model_data)
-#        st.session_state['model_data'] = True
-
 def start_model_data_subprocess():
-    if not st.session_state.get('model_data'):
-            model_data_path = os.path.join('./sources', 'model_data.py')
-            model_data = [sys.executable, model_data_path]
-            process = subprocess.Popen(model_data, stdout=subprocess.PIPE)
-            output, _ = process.communicate()
-            server_port = None
-            for line in output.decode().split('\n'):
-                if line.startswith("Server started on port"):
-                    server_port = int(line.split()[-1])
-                    break
-            st.session_state['port'] = server_port
-            st.session_state['model_data'] = True
+   if not st.session_state['model_data']:
+       model_data_path = os.path.join('./sources', 'model_data.py')
+       model_data = [sys.executable, model_data_path]
+       subprocess.Popen(model_data)
+       st.session_state['model_data'] = True
+
+# def start_model_data_subprocess():
+#     if not st.session_state.get('model_data'):
+#             model_data_path = os.path.join('./sources', 'model_data.py')
+#             model_data = [sys.executable, model_data_path]
+#             process = subprocess.Popen(model_data, stdout=subprocess.PIPE)
+#             output, _ = process.communicate()
+#             server_port = None
+#             for line in output.decode().split('\n'):
+#                 if line.startswith("Server started on port"):
+#                     server_port = int(line.split()[-1])
+#                     break
+#             st.session_state['port'] = server_port
+#             st.session_state['model_data'] = True
 
 # Function to handle search button click
 def handle_search_button_click():
@@ -51,7 +51,7 @@ def handle_search(customer_id_input):
         st.sidebar.write(":red[Identifiant non renseigné]")
         #st.session_state['customer_found'] = False
     else:
-        response = requests.get(f"http://localhost:{st.session_state['port']}/customer_data", params={"customer_id": customer_id_input}).json()
+        response = requests.get("http://localhost:6060/customer_data", params={"customer_id": customer_id_input}).json()
         customer_data = pd.read_json(response['customer_data'], dtype={'SK_ID_CURR': str})
         if customer_data.empty:
             st.sidebar.write(":red[Client non trouvé]")
@@ -68,7 +68,7 @@ def handle_predict_button_click():
 
 def handle_predict():
     if st.session_state['predict']:
-        response = requests.get(f"http://localhost:{st.session_state['port']}/predict",
+        response = requests.get("http://localhost:6060/predict",
                                 params={"customer_id": st.session_state['customer_id']}).json()
         customer_predict = response['customer_predict']
 
