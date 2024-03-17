@@ -32,7 +32,7 @@ def handle_search_button_click():
 
 
 def handle_search(customer_id_input):
-    if customer_id_input is None:
+    if customer_id_input.empty:
         st.sidebar.write(":red[Client non renseigné]")
     else:
         response = requests.get("http://localhost:8080/customer_data", params={"customer_id": customer_id_input}).json()
