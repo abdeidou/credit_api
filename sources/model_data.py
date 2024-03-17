@@ -6,13 +6,13 @@ from waitress import serve
 
 app = Flask(__name__)
 
-# Function to load model
+# Fonction charger le modèle
 def load_model(file_path):
     with open(file_path, 'rb') as f:
         model = pickle.load(f)
     return model
 
-# Read CSV files and load model
+# Lire les données CSV et charger le modèle
 data_test = pd.read_csv("./data/application_test.csv", dtype={'SK_ID_CURR': str})
 data_test_ohe = pd.read_csv("./data/application_test_ohe.csv", dtype={'SK_ID_CURR': str})
 customers_data = data_test
@@ -20,7 +20,7 @@ customers_data_ohe = data_test_ohe
 model_path = "./data/best_model.pickle"
 lgbm = load_model(model_path)
 
-
+# Fonction réponse à la requête customer_data
 @app.route('/customer_data', methods=['GET'])
 def customer_data():
     customer_id = request.args.get("customer_id")
@@ -28,6 +28,7 @@ def customer_data():
     response = {'customer_data': customer_row.to_json()}
     return json.dumps(response)
 
+# Fonction réponse à la requête predict
 @app.route('/predict', methods=['GET'])
 def predict():
     customer_id = request.args.get("customer_id")
@@ -38,5 +39,6 @@ def predict():
         response = {'customer_predict': predictions}
         return json.dumps(response)
 
+# Lancer le processus flask
 if __name__ == '__main__':
     serve(app, host="0.0.0.0", port=5000)

@@ -5,7 +5,7 @@ import subprocess
 import os
 import sys
 
-# Initialiser les variables de session
+# Fonction initialiser les variables de session
 def initialize_session_state():
     session_state_defaults = {
         'predict': False,
@@ -18,7 +18,7 @@ def initialize_session_state():
         if key not in st.session_state:
             st.session_state[key] = value
 
-# Lancer le processus model_data
+# Fonction lancer le processus flask model_data
 def start_model_data_subprocess():
    if not st.session_state['model_data']:
        model_data_path = os.path.join('./sources', 'model_data.py')
@@ -26,7 +26,7 @@ def start_model_data_subprocess():
        subprocess.Popen(model_data)
        st.session_state['model_data'] = True
 
-# Gérer le button chercher
+# Fonction gérer le button chercher
 def handle_search_button_click():
     initialize_session_state()
 def handle_search(customer_id_input):
@@ -44,7 +44,7 @@ def handle_search(customer_id_input):
             st.session_state['customer_id'] = customer_id_input
             st.session_state['customer_data'] = customer_data
 
-# Gérer le button predict
+# Fonction gérer le button predict
 def handle_predict_button_click():
     st.session_state['predict'] = True
 def handle_predict():
@@ -65,10 +65,10 @@ def handle_predict():
 # Initialiser la session
 initialize_session_state()
 
-# Lancer le processus model_data
+# Lancer le processus flask model_data
 start_model_data_subprocess()
 
-# Gestion barre latérale
+# Gérer la barre latérale
 st.sidebar.header('Informations client')
 first_name_input = st.sidebar.text_input("Nom", key='first_name_input')
 last_name_input = st.sidebar.text_input("Prénom", key='last_name_input')
@@ -76,7 +76,7 @@ customer_id_input = st.sidebar.text_input("Identifiant*", key='customer_id_input
 if st.sidebar.button('Chercher', on_click=handle_search_button_click):
     handle_search(customer_id_input)
 
-# Gestion page centrale
+# Gérer la page centrale
 if st.session_state['customer_found']:
     st.write("""
     # Prédiction de remboursement
