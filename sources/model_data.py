@@ -20,6 +20,12 @@ customers_data_ohe = data_test_ohe
 model_path = "./data/best_model.pickle"
 lgbm = load_model(model_path)
 
+
+@app.route('/check', methods=['GET'])
+def check():
+    print('check')
+    return json.dumps({"check": "check"})
+
 @app.route('/customer_data', methods=['GET'])
 def customer_data():
     customer_id = request.args.get("customer_id")
@@ -54,3 +60,6 @@ def predict():
 
 if __name__ == '__main__':
     serve(app, host="0.0.0.0", port=8080)
+
+#if __name__ == '__main__':
+#    app.run(host="localhost", port=8080, debug=True)

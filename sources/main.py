@@ -34,7 +34,8 @@ def handle_search_button_click():
 def handle_search(customer_id_input):
     response = requests.get("http://localhost:8080/customer_data", params={"customer_id": customer_id_input}).json()
     customer_data = pd.read_json(response['customer_data'], dtype={'SK_ID_CURR': str})
-
+    customer_data = pd.read_json(response['customer_data'])
+    st.write(response)
     if customer_data.empty:
         st.sidebar.write(":red[Client non trouvé]")
     else:
@@ -93,5 +94,3 @@ else:
     intro = "Ceci est une maquette d'application de scoring crédit pour calculer la probabilité qu’un client rembourse son\
              crédit à la consommation pour des personnes ayant peu ou pas du tout d'historique de prêt."
     st.write(f'<p style="font-size:26px; color:blue;">{intro}</p>', unsafe_allow_html=True)
-
-#test
