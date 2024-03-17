@@ -39,7 +39,7 @@ def test_customer_data_api(client, customer_id, expected_customer_data):
         # Vérifier la réponse
         #response_data = json.loads(response.text)
 
-        assert response == expected_customer_data
+        assert response.json() == expected_customer_data
 #
 # def test_predict_api(client, customer_id, expected_customer_predict):
 #     """Test de predict."""
