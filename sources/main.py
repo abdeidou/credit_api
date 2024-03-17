@@ -35,7 +35,6 @@ def handle_search(customer_id_input):
     response = requests.get("http://localhost:8080/customer_data", params={"customer_id": customer_id_input}).json()
     customer_data = pd.read_json(response['customer_data'], dtype={'SK_ID_CURR': str})
     customer_data = pd.read_json(response['customer_data'])
-    st.write(response)
     if customer_data.empty:
         st.sidebar.write(":red[Client non trouvé]")
     else:
