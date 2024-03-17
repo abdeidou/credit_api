@@ -44,8 +44,8 @@ def predict():
         return json.dumps(response)
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=6060, debug=False)
-    #serve(app, host="0.0.0.0", port=port)
+    #app.run(host="0.0.0.0", port=6060, debug=False)
+    serve(app, host="0.0.0.0", port=1111)
 
 #if __name__ == '__main__':
 #    app.run(host="localhost", port=8080, debug=True)
