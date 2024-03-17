@@ -12,13 +12,13 @@ def load_model(file_path):
         model = pickle.load(f)
     return model
 
-# # Lire les données CSV et charger le modèle
-# data_test = pd.read_csv("./data/application_test.csv")
-# data_test_ohe = pd.read_csv("./data/application_test_ohe.csv")
-# customers_data = data_test
-# customers_data_ohe = data_test_ohe
-# model_path = "./data/best_model.pickle"
-# lgbm = load_model(model_path)
+# Lire les données CSV et charger le modèle
+data_test = pd.read_csv("./data/application_test.csv")
+data_test_ohe = pd.read_csv("./data/application_test_ohe.csv")
+customers_data = data_test
+customers_data_ohe = data_test_ohe
+model_path = "./data/best_model.pickle"
+lgbm = load_model(model_path)
 
 # Fonction réponse à la requête customer_data
 @app.route('/customer_data', methods=['GET'])
@@ -41,12 +41,4 @@ def predict():
 
 # Lancer le processus flask
 if __name__ == '__main__':
-    # Lire les données CSV et charger le modèle
-    data_test = pd.read_csv("./data/application_test.csv")
-    data_test_ohe = pd.read_csv("./data/application_test_ohe.csv")
-    customers_data = data_test
-    customers_data_ohe = data_test_ohe
-    model_path = "./data/best_model.pickle"
-    lgbm = load_model(model_path)
-
     serve(app, host="0.0.0.0", port=5000)
