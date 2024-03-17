@@ -41,7 +41,7 @@ def test_customer_data_api(client, customer_id, expected_customer_data):
         response_data = json.loads(response.text)
         #response = response.json()
         customer_data = pd.read_json(response['customer_data'])
-        assert response_data == expected_customer_data
+        assert response_data['customer_data'] == expected_customer_data
 #
 # def test_predict_api(client, customer_id, expected_customer_predict):
 #     """Test de predict."""
