@@ -49,4 +49,4 @@ def test_predict_api(client, customer_id, expected_customer_predict):
         # Vérifier la réponse
         response_data = json.loads(response.text)
         assert response_data['customer_predict'] == expected_customer_predict
-# test
+# test test
