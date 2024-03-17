@@ -26,20 +26,6 @@ def start_model_data_subprocess():
        subprocess.Popen(model_data)
        st.session_state['model_data'] = True
 
-# def start_model_data_subprocess():
-#     if not st.session_state.get('model_data'):
-#             model_data_path = os.path.join('./sources', 'model_data.py')
-#             model_data = [sys.executable, model_data_path]
-#             process = subprocess.Popen(model_data, stdout=subprocess.PIPE)
-#             output, _ = process.communicate()
-#             server_port = None
-#             for line in output.decode().split('\n'):
-#                 if line.startswith("Server started on port"):
-#                     server_port = int(line.split()[-1])
-#                     break
-#             st.session_state['port'] = server_port
-#             st.session_state['model_data'] = True
-
 # Function to handle search button click
 def handle_search_button_click():
     initialize_session_state()
