@@ -31,28 +31,28 @@ def handle_search_button_click():
     initialize_session_state()
 
 
-# def handle_search(customer_id_input):
-#     if not customer_id_input:
-#         st.sidebar.write(":red[Identifiant non renseigné]")
-#         #st.session_state['customer_found'] = False
-#     else:
-#         response = requests.get("http://localhost:5000/customer_data", params={"customer_id": customer_id_input}).json()
-#         customer_data = pd.read_json(response['customer_data'], dtype={'SK_ID_CURR': str})
-#         st.write(customer_data)
-#         if customer_data.empty:
-#             st.sidebar.write(":red[Client non trouvé]")
-#             #st.session_state['customer_found'] = False
-#         else:
-#             st.session_state['customer_found'] = True
-#             st.session_state['customer_id'] = customer_id_input
-#             st.session_state['customer_data'] = customer_data
-
 def handle_search(customer_id_input):
-    st.write(customer_id_input)
-    response = requests.get("http://localhost:5000/customer_data", params={"customer_id": customer_id_input}).json()
-    #st.write(response)
-    customer_data = pd.read_json(response['customer_data'], dtype={'SK_ID_CURR': str})
-    st.write(customer_data)
+    if not customer_id_input:
+        st.sidebar.write(":red[Identifiant non renseigné]")
+        #st.session_state['customer_found'] = False
+    else:
+        response = requests.get("http://localhost:5000/customer_data", params={"customer_id": customer_id_input}).json()
+        customer_data = pd.read_json(response['customer_data'], dtype={'SK_ID_CURR': str})
+        st.write(customer_data)
+        if customer_data.empty:
+            st.sidebar.write(":red[Client non trouvé]")
+            #st.session_state['customer_found'] = False
+        else:
+            st.session_state['customer_found'] = True
+            st.session_state['customer_id'] = customer_id_input
+            st.session_state['customer_data'] = customer_data
+
+# def handle_search(customer_id_input):
+#     st.write(customer_id_input)
+#     response = requests.get("http://localhost:5000/customer_data", params={"customer_id": customer_id_input}).json()
+#     #st.write(response)
+#     customer_data = pd.read_json(response['customer_data'], dtype={'SK_ID_CURR': str})
+#     st.write(customer_data)
 
 # Function to handle predict button click
 

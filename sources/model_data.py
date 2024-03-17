@@ -26,8 +26,6 @@ def customer_data():
     customer_id = request.args.get("customer_id")
     customer_row = customers_data[customers_data['SK_ID_CURR'] == customer_id]
     response = {'customer_data': customer_row.to_json()}
-    #response = {'customer_data': customer_row.tolist()}
-    #response = {'customer_data': customer_row}
     return json.dumps(response)
 
 @app.route('/predict', methods=['GET'])
@@ -41,9 +39,7 @@ def predict():
         return json.dumps(response)
 
 if __name__ == '__main__':
-    #app.run(host="0.0.0.0", port=6060, debug=False)
     serve(app, host="0.0.0.0", port=5000)
-    #serve(app, host="localhost", port=5000)
 
 #if __name__ == '__main__':
 #    app.run(host="localhost", port=8080, debug=True)
