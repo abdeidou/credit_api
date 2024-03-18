@@ -43,7 +43,7 @@ def predict():
 # Fonction réponse à la requête threshold
 @app.route('/threshold', methods=['GET'])
 def threshold():
-    return str(threshold_opt)
+    return json.dumps(threshold_opt)
 
 
 # Lancer le processus flask
