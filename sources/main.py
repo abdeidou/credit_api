@@ -55,6 +55,7 @@ def handle_predict():
         customer_predict = response['customer_predict']
         response = requests.get("http://localhost:5000/threshold").json()
         threshold = response['threshold']
+        st.write("threshold")
         st.write(threshold)
         if threshold < customer_predict[0][1]:
             color = "red"
