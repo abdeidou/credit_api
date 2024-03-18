@@ -11,27 +11,27 @@ data:
 
       application_test.csv: les données clients test
   
-  application_test_ohe.csv: les données clients test traités par One_Hot_Encoding (disponibilité des données)
-  
-  best_model.pickle: le modèle optimisé LightGBM
-  
-  logo.png: image de page d'accueil
+      application_test_ohe.csv: les données clients test traités par One_Hot_Encoding (disponibilité des données)
+        
+      best_model.pickle: le modèle optimisé LightGBM
+        
+      logo.png: image de page d'accueil
   
 sources:
 
-  main.py: l'application Streamlit (partie IHM)
-  
-  model_data.py: l'api flask (partie module de données et prédiction)
+      main.py: l'application Streamlit (partie IHM)
+      
+      model_data.py: l'api flask (partie module de données et prédiction)
   
 tests:
 
-  test_api: script test de l'api en pytest, intégration continue, GitHub Action
+      test_api: script test de l'api en pytest, intégration continue, GitHub Action
   
 .idea: dossier de configuration PyCharm
 
 .github/workflows:
 
-  test.yml: services d'intégration continue lance le script pytest à chaque commit
+      test.yml: services d'intégration continue lance le script pytest à chaque commit
   
 requirements.txt: liste des packages requis pour le projet
 
