@@ -44,7 +44,7 @@ def predict():
 @app.route('/threshold', methods=['GET'])
 def threshold():
     customer_id = request.args.get("customer_id")
-    response = {'threshold': 0}
+    response = {'threshold': "0.3"}
     return json.dumps(response)
 
 
