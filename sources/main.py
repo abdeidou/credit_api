@@ -29,9 +29,9 @@ def start_model_data_subprocess():
 
 def get_threshold():
    if st.session_state['threshold'] == -1:
-       response= requests.get("http://localhost:5000/threshold",
+       response = requests.get("http://localhost:5000/threshold",
                                          params={"customer_id": st.session_state['customer_id']}).json()
-       st.session_state['threshold'] = response['threshold']
+       st.session_state['threshold'] = response
 
 # Fonction gérer le button chercher
 def handle_search_button_click():
