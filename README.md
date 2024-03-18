@@ -19,19 +19,19 @@ data:
   
 sources:
 
-      main.py: l'application Streamlit (partie IHM)
-      
-      model_data.py: l'api flask (partie module de données et prédiction)
+-> main.py: l'application Streamlit (partie IHM)
+
+-> model_data.py: l'api flask (partie module de données et prédiction)
   
 tests:
 
-      test_api: script test de l'api en pytest, intégration continue, GitHub Action
+-> test_api: script test de l'api en pytest, intégration continue, GitHub Action
   
 .idea: dossier de configuration PyCharm
 
 .github/workflows:
 
-      test.yml: services d'intégration continue lance le script pytest à chaque commit
+-> test.yml: services d'intégration continue lance le script pytest à chaque commit
   
 requirements.txt: liste des packages requis pour le projet
 
