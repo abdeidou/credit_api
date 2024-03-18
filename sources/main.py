@@ -64,7 +64,7 @@ def handle_predict():
 
         response = requests.get("http://localhost:5000/threshold")
         st.session_state['threshold'] = response.text
-
+        st.write(st.session_state['threshold'])
         if 0.3 < customer_predict[0][1]:
             color = "red"
             result = "Prêt refusé"
