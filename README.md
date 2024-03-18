@@ -9,7 +9,7 @@ https://creditapi-farvaphn8zvqsumca5abcg.streamlit.app
 
 data:
 
-  application_test.csv: les données clients test
+      application_test.csv: les données clients test
   
   application_test_ohe.csv: les données clients test traités par One_Hot_Encoding (disponibilité des données)
   
