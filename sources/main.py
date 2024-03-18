@@ -53,7 +53,8 @@ def handle_predict():
         response = requests.get("http://localhost:5000/predict",
                                 params={"customer_id": st.session_state['customer_id']}).json()
         customer_predict = response['customer_predict']
-        response = requests.get("http://localhost:5000/threshold").json()
+        response = requests.get("http://localhost:5000/threshold",
+                                params={}).json()
         threshold = response['threshold']
         st.write("threshold")
         st.write(threshold)
