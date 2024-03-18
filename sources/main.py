@@ -12,7 +12,8 @@ def initialize_session_state():
         'customer_found': False,
         'customer_data': [],
         'customer_id': -1,
-        'model_data': False
+        'model_data': False,
+        'threshold': -1
     }
     for key, value in session_state_defaults.items():
         if key not in st.session_state:
@@ -25,6 +26,12 @@ def start_model_data_subprocess():
        model_data = [sys.executable, model_data_path]
        subprocess.Popen(model_data)
        st.session_state['model_data'] = True
+
+def get_threshold():
+   if st.session_state['threshold'] == -1:
+       response= requests.get("http://localhost:5000/threshold",
+                                         params={"customer_id": st.session_state['customer_id']}).json()
+       st.session_state['threshold'] = response['threshold']
 
 # Fonction gérer le button chercher
 def handle_search_button_click():
@@ -49,15 +56,12 @@ def handle_predict_button_click():
     st.session_state['predict'] = True
 def handle_predict():
     if st.session_state['predict']:
-        st.write("threshold2")
+        st.write("threshold3")
+        st.write(st.session_state['threshold'])
         # Récupérer la prédiction
-        response_predict = requests.get("http://localhost:5000/predict",
+        response = requests.get("http://localhost:5000/predict",
                                 params={"customer_id": st.session_state['customer_id']}).json()
-        customer_predict = response_predict['customer_predict']
-        response_threshold = requests.get("http://localhost:5000/threshold",
-                                params={"customer_id": st.session_state['customer_id']}).json()
-        #threshold = response_threshold['threshold']
-        #st.write(threshold)
+        customer_predict = response['customer_predict']
         if 0.3 < customer_predict[0][1]:
             color = "red"
             result = "Prêt refusé"
@@ -73,6 +77,8 @@ initialize_session_state()
 
 # Lancer le processus flask model_data
 start_model_data_subprocess()
+
+get_threshold()
 
 # Gérer la barre latérale
 st.sidebar.header('Informations client')
