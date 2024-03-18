@@ -27,10 +27,10 @@ def start_model_data_subprocess():
        subprocess.Popen(model_data)
        st.session_state['model_data'] = True
 
-def get_threshold():
-   if st.session_state['threshold'] == -1:
-       response = requests.get("http://localhost:5000/threshold")
-       st.session_state['threshold'] = float(response.text)
+#def get_threshold():
+#   if st.session_state['threshold'] == -1:
+#       response = requests.get("http://localhost:5000/threshold")
+#       st.session_state['threshold'] = float(response.text)
 
 # Fonction gérer le button chercher
 def handle_search_button_click():
@@ -61,6 +61,10 @@ def handle_predict():
         response = requests.get("http://localhost:5000/predict",
                                 params={"customer_id": st.session_state['customer_id']}).json()
         customer_predict = response['customer_predict']
+
+        response = requests.get("http://localhost:5000/threshold")
+        st.session_state['threshold'] = float(response.text)
+
         if 0.3 < customer_predict[0][1]:
             color = "red"
             result = "Prêt refusé"
@@ -77,7 +81,7 @@ initialize_session_state()
 # Lancer le processus flask model_data
 start_model_data_subprocess()
 
-get_threshold()
+#get_threshold()
 
 # Gérer la barre latérale
 st.sidebar.header('Informations client')
