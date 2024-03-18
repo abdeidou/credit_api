@@ -13,7 +13,7 @@ def initialize_session_state():
         'customer_data': [],
         'customer_id': -1,
         'model_data': False,
-        'threshold': -1
+        'seuil': -1
     }
     for key, value in session_state_defaults.items():
         if key not in st.session_state:
@@ -62,8 +62,8 @@ def handle_predict():
                                 params={"customer_id": st.session_state['customer_id']}).json()
         customer_predict = response['customer_predict']
 
-        response = requests.get("http://localhost:5000/threshold")
-        st.session_state['threshold'] = response.text
+        response = requests.get("http://localhost:5000/seuil")
+        st.session_state['seuil'] = response.text
         st.write(st.session_state['threshold'])
         if 0.3 < customer_predict[0][1]:
             color = "red"
