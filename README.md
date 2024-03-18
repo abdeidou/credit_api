@@ -9,13 +9,13 @@ https://creditapi-farvaphn8zvqsumca5abcg.streamlit.app
 
 data:
 
-      application_test.csv: les données clients test
+-> application_test.csv: les données clients test
+
+-> application_test_ohe.csv: les données clients test traités par One_Hot_Encoding (disponibilité des données)
   
-      application_test_ohe.csv: les données clients test traités par One_Hot_Encoding (disponibilité des données)
-        
-      best_model.pickle: le modèle optimisé LightGBM
-        
-      logo.png: image de page d'accueil
+-> best_model.pickle: le modèle optimisé LightGBM
+  
+-> logo.png: image de page d'accueil
   
 sources:
 
