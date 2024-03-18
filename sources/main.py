@@ -49,15 +49,19 @@ def handle_predict_button_click():
     st.session_state['predict'] = True
 def handle_predict():
     if st.session_state['predict']:
+        # Récupérer la prédiction
         response = requests.get("http://localhost:5000/predict",
                                 params={"customer_id": st.session_state['customer_id']}).json()
         customer_predict = response['customer_predict']
-        if customer_predict[0][1] < customer_predict[0][0]:
-            color = "green"
-            result = "Prêt accordé"
-        else:
+        response = requests.get("http://localhost:5000/threshold").json()
+        threshold = response['threshold']
+        st.write(threshold)
+        if threshold < customer_predict[0][1]:
             color = "red"
             result = "Prêt refusé"
+        else:
+            color = "green"
+            result = "Prêt accordé"
         perc_predict = round(100 * customer_predict[0][0], 1)
         st.write(f'<p style="color:{color};">{result}</p>', unsafe_allow_html=True)
         st.write(f'<p style="color:{color};">{perc_predict}%</p>', unsafe_allow_html=True)

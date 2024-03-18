@@ -19,6 +19,7 @@ customers_data = data_test
 customers_data_ohe = data_test_ohe
 model_path = "./data/best_model.pickle"
 lgbm = load_model(model_path)
+threshold_opt = 0.3
 
 # Fonction réponse à la requête customer_data
 @app.route('/customer_data', methods=['GET'])
@@ -38,6 +39,12 @@ def predict():
         predictions = lgbm.predict_proba(customer_row_ohe).tolist()
         response = {'customer_predict': predictions}
         return json.dumps(response)
+
+@app.route('/threshold', methods=['GET'])
+def threshold():
+    response = {'threshold': threshold_opt}
+    return json.dumps(threshold_opt)
+
 
 # Lancer le processus flask
 if __name__ == '__main__':
