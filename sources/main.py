@@ -56,8 +56,8 @@ def handle_predict():
         customer_predict = response_predict['customer_predict']
         response_threshold = requests.get("http://localhost:5000/threshold",
                                 params={"customer_id": st.session_state['customer_id']}).json()
-        threshold = response_threshold['threshold']
-        st.write(threshold)
+        #threshold = response_threshold['threshold']
+        #st.write(threshold)
         if 0.3 < customer_predict[0][1]:
             color = "red"
             result = "Prêt refusé"
