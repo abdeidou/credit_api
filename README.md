@@ -11,7 +11,7 @@ data:
 
 -> application_test.csv: les données clients test
 
--> application_test_ohe.csv: les données clients test traités par One_Hot_Encoding (disponibilité des données)
+-> application_test_ohe.csv: les données clients test traités par One_Hot_Encoding (disponibilité des données pour le modèle)
   
 -> best_model.pickle: le modèle optimisé LightGBM
   
@@ -35,18 +35,13 @@ tests:
   
 requirements.txt: liste des packages requis pour le projet
 
-
 ## Utilisation
 
-Instructions d'utilisation
+Ce projet a été créé dans le cadre d'un travail de formation profesionnelle et est ouvert à des fins éducatives et non commerciales. Vous êtes libre de :
 
-## Contribuer
-
-Instructions pour contribuer
-
-## Licence
-
-Licence du projet
+- Utiliser le code à des fins éducatives et académiques.
+- Modifier le code pour vos propres besoins.
+- Distribuer des copies du code aux autres étudiants ou enseignants.
 
 ## Contact
 
