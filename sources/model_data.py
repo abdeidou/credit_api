@@ -40,6 +40,7 @@ def predict():
         response = {'customer_predict': predictions}
         return json.dumps(response)
 
+# Fonction réponse à la requête threshold
 @app.route('/threshold', methods=['GET'])
 def threshold():
     response = {'threshold': threshold_opt}
