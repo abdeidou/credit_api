@@ -63,7 +63,7 @@ def handle_predict():
         customer_predict = response['customer_predict']
 
         response = requests.get("http://localhost:5000/threshold")
-        #st.session_state['threshold'] = response.text
+        st.session_state['threshold'] = response.text
 
         if 0.3 < customer_predict[0][1]:
             color = "red"
