@@ -49,6 +49,7 @@ def handle_predict_button_click():
     st.session_state['predict'] = True
 def handle_predict():
     if st.session_state['predict']:
+        st.write("threshold")
         # Récupérer la prédiction
         response_predict = requests.get("http://localhost:5000/predict",
                                 params={"customer_id": st.session_state['customer_id']}).json()
