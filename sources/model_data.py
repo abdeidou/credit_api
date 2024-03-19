@@ -12,7 +12,8 @@ def load_model(file_path):
         model = pickle.load(f)
     return model
 
-# Lire les données CSV et charger le modèle
+# Lire les données CSV, charger le modèle et le seuil optimal
+
 data_test = pd.read_csv("./data/application_test.csv", dtype={'SK_ID_CURR': str})
 data_test_ohe = pd.read_csv("./data/application_test_ohe.csv", dtype={'SK_ID_CURR': str})
 customers_data = data_test
@@ -44,7 +45,6 @@ def predict():
 @app.route('/threshold')
 def threshold():
     return str(threshold_opt)
-
 
 # Lancer le processus flask
 if __name__ == '__main__':

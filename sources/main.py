@@ -55,18 +55,12 @@ def handle_predict_button_click():
     st.session_state['predict'] = True
 def handle_predict():
     if st.session_state['predict']:
-        st.write("threshold3")
-        st.write(st.session_state['threshold'])
         # Récupérer la prédiction
         response = requests.get("http://localhost:8080/predict",
                                 params={"customer_id": st.session_state['customer_id']}).json()
         customer_predict = response['customer_predict']
-
-        # response = requests.get("http://localhost:8080/threshold")
-        # threshold = response.text
-        st.write(st.session_state['threshold'])
-
-        if 0.3 < customer_predict[0][1]:
+        # Refuser le prêt si la probabilité de classe 1 est supérieur au threshold
+        if st.session_state['threshold'] < customer_predict[0][1]:
             color = "red"
             result = "Prêt refusé"
         else:
@@ -82,6 +76,7 @@ initialize_session_state()
 # Lancer le processus flask model_data
 start_model_data_subprocess()
 
+# Récupérer le seuil
 get_threshold()
 
 # Gérer la barre latérale
