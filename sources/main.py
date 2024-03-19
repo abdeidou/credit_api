@@ -40,7 +40,7 @@ def handle_search(customer_id_input):
         st.sidebar.write(":red[Identifiant non renseigné]")
         st.session_state['customer_found'] = False
     else:
-        response = requests.get("http://localhost:5000/customer_data", params={"customer_id": customer_id_input}).json()
+        response = requests.get("http://localhost:8080/customer_data", params={"customer_id": customer_id_input}).json()
         customer_data = pd.read_json(response['customer_data'], dtype={'SK_ID_CURR': str})
         if customer_data.empty:
             st.sidebar.write(":red[Client non trouvé]")
@@ -58,11 +58,11 @@ def handle_predict():
         st.write("threshold3")
         st.write(st.session_state['threshold'])
         # Récupérer la prédiction
-        response = requests.get("http://localhost:5000/predict",
+        response = requests.get("http://localhost:8080/predict",
                                 params={"customer_id": st.session_state['customer_id']}).json()
         customer_predict = response['customer_predict']
 
-        response = requests.get("http://localhost:5000/threshold")
+        response = requests.get("http://localhost:8080/threshold")
         threshold = response.text
         st.write(threshold)
 
