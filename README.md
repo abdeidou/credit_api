@@ -17,6 +17,8 @@ data:
 -> best_model.pickle: le modèle optimisé LightGBM
   
 -> logo.png: image de page d'accueil
+
+-> IDOUMOHMED_ABDELAAZIZ_2_notebook_modélisation_012024.ipynb: notebook de modélisation 
   
 sources:
 
