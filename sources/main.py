@@ -27,6 +27,7 @@ def start_model_data_subprocess():
        subprocess.Popen(model_data)
        st.session_state['model_data'] = True
 
+# Fonction de récupération de seuil optimal
 def get_threshold():
   if st.session_state['threshold'] == -1:
       response = requests.get("http://localhost:8080/threshold")
