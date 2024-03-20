@@ -4,6 +4,7 @@ import pandas as pd
 import pickle
 from waitress import serve
 
+# Créer une instance de l'application Flask
 app = Flask(__name__)
 
 # Fonction charger le modèle
