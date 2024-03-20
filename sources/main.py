@@ -66,7 +66,7 @@ def handle_predict():
         else:
             color = "green"
             result = "Prêt accordé"
-        perc_predict = round(100 * customer_predict[0][0], 1)
+        perc_predict = round(100 * customer_predict[0][1], 1)
         st.write(f'<p style="color:{color};">{result}</p>', unsafe_allow_html=True)
         st.write(f'<p style="color:{color};">{perc_predict}%</p>', unsafe_allow_html=True)
 
