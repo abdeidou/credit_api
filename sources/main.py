@@ -5,7 +5,7 @@ import requests
 # Fonction initialiser les variables de session
 def initialize_session_state():
     session_state_defaults = {
-        'api_url': "https://credit-predict-grvocaanfq-ew.a.run.app",
+        'api_url': "https://credit-predict-2olkar52da-ew.a.run.app",
         'predict': False,
         'customer_found': False,
         'customer_data': [],
