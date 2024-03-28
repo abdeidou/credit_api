@@ -92,7 +92,7 @@ if st.session_state['customer_found']:
     if st.button('Prédire', on_click=handle_predict_button_click):
         handle_predict()
 else:
-    st.image('../data/logo.png')
+    st.image('./data/logo.png')
     intro = "Ceci est une maquette d'application de scoring crédit pour calculer la probabilité qu’un client rembourse son\
              crédit à la consommation pour des personnes ayant peu ou pas du tout d'historique de prêt."
     st.write(f'<p style="font-size:26px; color:blue;">{intro}</p>', unsafe_allow_html=True)
