@@ -1,7 +1,2 @@
-flask
-lightgbm
-scikit-learn
-waitress
-pytest
 requests
 pandas

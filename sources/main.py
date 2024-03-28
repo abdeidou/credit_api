@@ -1,7 +1,6 @@
 import pandas as pd
 import streamlit as st
 import requests
-import subprocess
 import os
 import sys
 
@@ -19,13 +18,6 @@ def initialize_session_state():
         if key not in st.session_state:
             st.session_state[key] = value
 
-# Fonction lancer le processus flask model_data
-def start_model_data_subprocess():
-   if not st.session_state['model_data']:
-       model_data_path = os.path.join('./sources', 'model_data.py')
-       model_data = [sys.executable, model_data_path]
-       subprocess.Popen(model_data)
-       st.session_state['model_data'] = True
 
 # Fonction de récupération de seuil optimal
 def get_threshold():
@@ -75,7 +67,6 @@ def handle_predict():
 initialize_session_state()
 
 # Lancer le processus flask model_data
-start_model_data_subprocess()
 
 # Récupérer le seuil
 get_threshold()
