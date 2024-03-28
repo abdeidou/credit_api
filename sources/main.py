@@ -1,12 +1,11 @@
 import pandas as pd
 import streamlit as st
 import requests
-import os
-import sys
 
 # Fonction initialiser les variables de session
 def initialize_session_state():
     session_state_defaults = {
+        'api_url': "https://credit-predict-grvocaanfq-ew.a.run.app",
         'predict': False,
         'customer_found': False,
         'customer_data': [],
@@ -18,22 +17,26 @@ def initialize_session_state():
         if key not in st.session_state:
             st.session_state[key] = value
 
-
 # Fonction de récupération de seuil optimal
 def get_threshold():
+  endpoint = "/threshold"
   if st.session_state['threshold'] == -1:
-      response = requests.get("http://localhost:8080/threshold")
+      url = f"{st.session_state['api_url']}{endpoint}"
+      response = requests.get(url)
       st.session_state['threshold'] = float(response.text)
 
 # Fonction gérer le button chercher
 def handle_search_button_click():
     initialize_session_state()
 def handle_search(customer_id_input):
+    endpoint = "/customer_data/"
     if not customer_id_input:
         st.sidebar.write(":red[Identifiant non renseigné]")
         st.session_state['customer_found'] = False
     else:
-        response = requests.get("http://localhost:8080/customer_data", params={"customer_id": customer_id_input}).json()
+        url = f"{st.session_state['api_url']}{endpoint}"
+        params = {"customer_id": customer_id_input}
+        response = requests.get(url, params=params).json()
         customer_data = pd.read_json(response['customer_data'], dtype={'SK_ID_CURR': str})
         if customer_data.empty:
             st.sidebar.write(":red[Client non trouvé]")
@@ -47,10 +50,12 @@ def handle_search(customer_id_input):
 def handle_predict_button_click():
     st.session_state['predict'] = True
 def handle_predict():
+    endpoint = "/predict/"
     if st.session_state['predict']:
         # Récupérer la prédiction
-        response = requests.get("http://localhost:8080/predict",
-                                params={"customer_id": st.session_state['customer_id']}).json()
+        url = f"{st.session_state['api_url']}{endpoint}"
+        params = {"customer_id": st.session_state['customer_id']}
+        response = requests.get(url, params=params).json()
         customer_predict = response['customer_predict']
         # Refuser le prêt si la probabilité de classe 1 est supérieur au threshold
         if st.session_state['threshold'] < customer_predict[0][1]:
@@ -66,9 +71,7 @@ def handle_predict():
 # Initialiser la session
 initialize_session_state()
 
-# Lancer le processus flask model_data
-
-# Récupérer le seuil
+# Récupérer le seuil optimal
 get_threshold()
 
 # Gérer la barre latérale
@@ -89,7 +92,7 @@ if st.session_state['customer_found']:
     if st.button('Prédire', on_click=handle_predict_button_click):
         handle_predict()
 else:
-    st.image('./data/logo.png')
+    st.image('../data/logo.png')
     intro = "Ceci est une maquette d'application de scoring crédit pour calculer la probabilité qu’un client rembourse son\
              crédit à la consommation pour des personnes ayant peu ou pas du tout d'historique de prêt."
     st.write(f'<p style="font-size:26px; color:blue;">{intro}</p>', unsafe_allow_html=True)
