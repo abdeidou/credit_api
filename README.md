@@ -1,4 +1,4 @@
-# credit_api
+# credit_predict_application
 
 Une application de test de l'API flask deployée sur Google Cloud à l'adresse :
 
