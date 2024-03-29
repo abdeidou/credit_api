@@ -1,42 +1,26 @@
 # credit_api
 
-Une application de “scoring crédit” pour prédir d'accorder ou réfuser un crédit à un client en utilisant un classifieur LigntGBM optimisé et s'appuyant sur des sources de données test variées (données comportementales, données provenant d'autres institutions financières, etc.)
+Une application de test de l'API flask deployée sur Google Cloud à l'adresse :
 
-Réalisée en Flask et Streamlit et deployée via Streamlit, se basant sur ce repo à l'adresse:
+https://credit-predict-2olkar52da-ew.a.run.app
+
+Réalisée et deployée via Streamlit, se basant sur ce repo à l'adresse:
 
 https://creditapi-farvaphn8zvqsumca5abcg.streamlit.app
 
 ## Les dossiers
 
 data:
-
--> application_test.csv: les données clients test
-
--> application_test_ohe.csv: les données clients test traités par One_Hot_Encoding (disponibilité des données pour le modèle)
-  
--> best_model.pickle: le modèle optimisé LightGBM
   
 -> logo.png: image de page d'accueil
-
--> IDOUMOHMED_ABDELAAZIZ_2_notebook_modélisation_012024.ipynb: notebook de modélisation 
   
 sources:
 
--> main.py: l'application Streamlit (partie IHM)
-
--> model_data.py: l'api flask (partie module de données et prédiction)
-  
-tests:
-
--> test_api: script test de l'api en pytest, intégration continue, GitHub Action
+-> main.py: le code source Streamlit de l'application
   
 .idea: dossier de configuration PyCharm
-
-.github/workflows:
-
--> test.yml: services d'intégration continue lance le script pytest à chaque commit
   
-requirements.txt: liste des packages requis pour le projet
+requirements.txt: liste des packages requis pour l'application
 
 ## Utilisation
 
