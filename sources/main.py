@@ -50,7 +50,7 @@ def handle_predict():
         response = requests.get(url, params=params).json()
         positive_predict = response['positive_predict']
         prob_positive_predict = positive_predict[0]
-        decision = response['decision']
+        decision = response['class']
         # Refuser le prêt si la probabilité de classe 1 est supérieur au threshold
         if decision=="refuse":
             color = "red"
