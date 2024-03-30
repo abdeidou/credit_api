@@ -76,6 +76,7 @@ initialize_session_state()
 # Récupérer le seuil optimal
 #get_threshold()
 
+
 # Gérer la barre latérale
 st.sidebar.header('Informations client')
 first_name_input = st.sidebar.text_input("Nom", key='first_name_input')
