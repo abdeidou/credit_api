@@ -52,7 +52,7 @@ def handle_predict():
         prob_positive_predict = positive_predict[0]
         decision = response['decision']
         # Refuser le prêt si la probabilité de classe 1 est supérieur au threshold
-        if decision=="no":
+        if decision=="refuse":
             color = "red"
             result = "Prêt refusé"
         else:
