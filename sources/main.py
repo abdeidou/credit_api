@@ -56,15 +56,17 @@ def handle_predict():
         url = f"{st.session_state['api_url']}{endpoint}"
         params = {"customer_id": st.session_state['customer_id']}
         response = requests.get(url, params=params).json()
-        customer_predict = response['customer_predict']
+        #customer_predict = response['customer_predict']
+        positive_predict = response['positive_predict']
+        decision = response['decision']
         # Refuser le prêt si la probabilité de classe 1 est supérieur au threshold
-        if st.session_state['threshold'] < customer_predict[0][1]:
+        if decision=="no":
             color = "red"
             result = "Prêt refusé"
         else:
             color = "green"
             result = "Prêt accordé"
-        perc_predict = round(100 * customer_predict[0][1], 1)
+        perc_predict = round(100 * positive_predict, 1)
         st.write(f'<p style="color:{color};">{result}</p>', unsafe_allow_html=True)
         st.write(f'<p style="color:{color};">{perc_predict}%</p>', unsafe_allow_html=True)
 
@@ -72,7 +74,7 @@ def handle_predict():
 initialize_session_state()
 
 # Récupérer le seuil optimal
-get_threshold()
+#get_threshold()
 
 # Gérer la barre latérale
 st.sidebar.header('Informations client')
