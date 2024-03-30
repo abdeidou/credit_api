@@ -17,14 +17,6 @@ def initialize_session_state():
         if key not in st.session_state:
             st.session_state[key] = value
 
-# Fonction de récupération de seuil optimal
-def get_threshold():
-  endpoint = "/threshold"
-  if st.session_state['threshold'] == -1:
-      url = f"{st.session_state['api_url']}{endpoint}"
-      response = requests.get(url)
-      st.session_state['threshold'] = float(response.text)
-
 # Fonction gérer le button chercher
 def handle_search_button_click():
     initialize_session_state()
@@ -56,8 +48,8 @@ def handle_predict():
         url = f"{st.session_state['api_url']}{endpoint}"
         params = {"customer_id": st.session_state['customer_id']}
         response = requests.get(url, params=params).json()
-        #customer_predict = response['customer_predict']
         positive_predict = response['positive_predict']
+        prob_positive_predict = positive_predict[0]
         decision = response['decision']
         # Refuser le prêt si la probabilité de classe 1 est supérieur au threshold
         if decision=="no":
@@ -66,16 +58,12 @@ def handle_predict():
         else:
             color = "green"
             result = "Prêt accordé"
-        perc_predict = round(100 * positive_predict, 1)
+        perc_predict = round(100 * prob_positive_predict, 1)
         st.write(f'<p style="color:{color};">{result}</p>', unsafe_allow_html=True)
         st.write(f'<p style="color:{color};">{perc_predict}%</p>', unsafe_allow_html=True)
 
 # Initialiser la session
 initialize_session_state()
-
-# Récupérer le seuil optimal
-#get_threshold()
-
 
 # Gérer la barre latérale
 st.sidebar.header('Informations client')
