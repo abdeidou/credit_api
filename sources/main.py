@@ -48,8 +48,8 @@ def handle_predict():
         url = f"{st.session_state['api_url']}{endpoint}"
         params = {"customer_id": st.session_state['customer_id']}
         response = requests.get(url, params=params).json()
-        positive_predict = response['positive_predict']
-        prob_positive_predict = positive_predict[0]
+        negative_predict = response['negative_predict']
+        prob_negative_predict = negative_predict[0]
         classe = response['classe']
         # Refuser le prêt si la probabilité de classe 1 est supérieur au threshold
         if classe=="refuse":
@@ -58,7 +58,7 @@ def handle_predict():
         else:
             color = "green"
             result = "Prêt accordé"
-        perc_predict = round(100 * prob_positive_predict, 1)
+        perc_predict = round(100 * prob_negative_predict, 1)
         st.write(f'<p style="color:{color};">{result}</p>', unsafe_allow_html=True)
         st.write(f'<p style="color:{color};">{perc_predict}%</p>', unsafe_allow_html=True)
 
