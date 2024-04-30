@@ -219,9 +219,9 @@ def display_result_explain():
     st.markdown('<div id="explain"><h1>Explication</h1></div>', unsafe_allow_html=True)
     col1, col2 = st.columns(2)
     with col1:
-        st.image(st.session_state['explain_local_img_file_path'], caption='Locale')
+        st.image(st.session_state['explain_local_img_file_path'], caption='Shap local')
     with col2:
-        st.image(st.session_state['explain_global_img_file_path'], caption='Globale')
+        st.image(st.session_state['explain_global_img_file_path'], caption='Shap global')
 
 
 # Fonction pour gérer le bouton positionner.
