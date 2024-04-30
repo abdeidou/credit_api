@@ -230,41 +230,49 @@ def handle_position():
     return
 
 def display_result_position():
-    """Affiche les options de positionnement pour les variables."""
     st.markdown('<div id="position"><h1>Positionnement</h1></div>', unsafe_allow_html=True)
-    # Récupération des noms des variables
-    endpoint_feature_names = "/feature_names/"
+    # Récuperer la liste de variables
+    endpoint_feature_names = "/feature_names"
     url = f"{st.session_state['api_url']}{endpoint_feature_names}"
     response = requests.get(url).json()
     feature_names = response['feature_names']
-
-    # Options de pagination et sélection
+    # Déterminez le nombre d'options à afficher à la fois
     options_per_page = 10
+    # Déterminez le nombre total de pages
     total_pages = len(feature_names) // options_per_page
+    # Sélectionnez les options pour la page actuelle
     page_index = st.session_state['position_page_index']
     start_index = page_index * options_per_page
     end_index = min((page_index + 1) * options_per_page, len(feature_names))
     options_to_display = feature_names[start_index:end_index]
-
-    variable_select = st.radio("Choix de variable:", [""] + options_to_display, index=0)
+    # Ajouter une option vide au début de chaque page
+    options_to_display_with_empty = [""] + options_to_display
+    # Sélectionner l'option vide par défaut
+    default_index = 0
+    # Afficher les options avec une option vide et un bouton "Next" et "Previous"
+    variable_select = st.radio("Choix de variable:",
+                               options_to_display_with_empty,
+                               index=default_index)
     col1, col2, col3 = st.columns([1, 1, 3])
     with col1:
-        if st.button("Previous", disabled=(page_index == 0)):
+        if st.button("Previous", disabled=(page_index == 1)):
             st.session_state['position_page_index'] = max(page_index - 1, 0)
+            # Rafraichir la page
             st.rerun()
     with col2:
-        st.write(f"Page {page_index + 1}/{total_pages + 1}")
+        st.write(f"Page {page_index}/{total_pages}")
     with col3:
         if st.button("Next", disabled=(page_index == total_pages)):
             st.session_state['position_page_index'] = min(page_index + 1, total_pages)
+            # Rafraichir la page
             st.rerun()
-
-    # Gestion de la sélection
+    # En cas de sélection
     if variable_select != "":
         endpoint_position = "/position/"
         params = {"customer_id": st.session_state['customer_id'], "variable": variable_select}
         url = f"{st.session_state['api_url']}{endpoint_position}"
         response = requests.get(url, params=params)
+        # Vérifier si la requête a réussi
         if response.status_code == 200:
             response = response.json()
             customer_value = response['customer_value']
@@ -274,22 +282,22 @@ def display_result_position():
         else:
             st.error("Une erreur s'est produite lors de la génération du tracé positionnement.")
 
-
 def plot_positioning_graph(customer_value, customers_min_value, customers_max_value, feature):
-    """Crée et affiche un graphique de positionnement."""
+    # Création des étiquettes pour les barres
     labels = ['Autres clients min', 'Valeur client', 'Autres clients max']
+    # Valeurs des barres
     values = [customers_min_value, customer_value, customers_max_value]
-
+    # Création du graphique
     fig, ax = plt.subplots(figsize=(8, 6))
     bars = ax.barh(labels, values, color=['green', 'blue', 'red'])
     ax.set_xlabel(feature)
-
+    # Ajouter des annotations de texte sur les barres
     for bar in bars:
-        width = bar.get_width()
-        label_x_pos = width - 0.5 * width
-        ax.text(label_x_pos, bar.get_y() + bar.get_height() / 2, f'{round(width, 2)}', va='center')
-
+        width = bar.get_width()  # Obtient la largeur de la barre
+        label_x_pos = width - 0.5 * width  # Place le texte légèrement vers
+        ax.text(label_x_pos, bar.get_y() + bar.get_height() / 2, f'{round(width,2)}', va='center')
     st.pyplot(fig)
+
 
 
 # Gestion de la barre latérale
