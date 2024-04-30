@@ -306,7 +306,6 @@ def plot_positioning_graph(customer_value, customers_min_value, customers_max_va
     st.pyplot(fig)
 
 
-
 # Gestion de la barre latérale
 st.sidebar.header('Informations client')
 customer_id_input = st.sidebar.text_input("Identifiant*", key='customer_id_input', value='100028')
