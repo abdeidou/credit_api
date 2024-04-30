@@ -3,4 +3,4 @@ streamlit==1.30.0
 requests==2.31.0
 streamviz==5.1
 pillow==10.3.0
-matplotlib==3.7.2
+matplotlib
