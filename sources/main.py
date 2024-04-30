@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import os
 
 
-# Fonction pour initialiser les variables de session
+# Fonction pour initialiser les variables de session.
 def initialize_session_state():
     session_state_defaults = {
         'api_url': "https://credit-predict-2olkar52da-ew.a.run.app",
@@ -33,7 +33,7 @@ if 'api_url' not in st.session_state:
     initialize_session_state()
 
 
-# SupprimeR les fichiers temporaires.
+# Fonction pour supprimer les fichiers temporaires.
 def safe_delete_data_files():
     file_paths = [
         'search_df_file_path',
@@ -47,7 +47,7 @@ def safe_delete_data_files():
             if os.path.exists(file_path):
                 os.remove(file_path)
 
-# EnregistreR les données (en fonction du mode) dans un répertoire local.
+# Fonction pour enregistrer les données (en fonction du mode) le répertoire data.
 def save_to_data(obj, mode):
     directory = "./data"
     if not os.path.exists(directory):
@@ -73,16 +73,17 @@ def save_to_data(obj, mode):
     return full_path
 
 
-# Fonction pour gérer la recherche de client
+# Fonction pour gérer le clic sur le bouton rechercher.
 def handle_search_button_click():
     safe_delete_data_files()
     initialize_session_state()
     st.session_state['search'] = True
 
-
+# Fonction pour gérer la rechercher d'un client.
 def handle_search(customer_id_input):
     endpoint = "/customer_data/"
     if not customer_id_input:
+        # Si l'identifiant est non renseigné
         st.sidebar.write(":red[Identifiant non renseigné]")
         st.session_state['customer_found'] = False
     else:
@@ -91,41 +92,42 @@ def handle_search(customer_id_input):
         response = requests.get(url, params=params).json()
         customer_data = pd.read_json(response['customer_data'], dtype={'SK_ID_CURR': str})
         if customer_data.empty:
+            # Si le client n'est pas trouvé.
             st.sidebar.write(":red[Client non trouvé]")
             st.session_state['customer_found'] = False
         else:
+            # Si le client est trouvé sauvegarder ses données.
             st.session_state['customer_found'] = True
             st.session_state['customer_id'] = customer_id_input
             st.session_state['search_df_file_path'] = save_to_data(customer_data, 'search')
 
 
+# Fonction pour afficher les données d'un client.
 def display_result_search():
-    """Affiche les résultats de la recherche dans un tableau."""
     st.markdown('<div id="search"><h1>Données client</h1></div>', unsafe_allow_html=True)
     customer_row = pd.read_csv(st.session_state['search_df_file_path'], dtype={'SK_ID_CURR': str})
     st.dataframe(customer_row, use_container_width=True)
 
 
-# Gestion de la prédiction
+# Fonction pour gérer le clic sur le bouton prédire.
 def handle_predict_button_click():
     st.session_state['predict'] = True
 
-
+# Fonction pour gérer la prédiction.
 def handle_predict():
     endpoint_predict = "/predict/"
     endpoint_threshold = "/threshold"
     if st.session_state['predict']:
+        # Récupérer la probabilité positives
         url = f"{st.session_state['api_url']}{endpoint_predict}"
         params = {"customer_id": st.session_state['customer_id']}
         response = requests.get(url, params=params).json()
         negative_predict = response['negative_predict']
         prob_negative_predict = negative_predict[0]
-
         # Récupérer le seuil de décision
         url = f"{st.session_state['api_url']}{endpoint_threshold}"
         response = requests.get(url).json()
         threshold = response['threshold']
-
         # Définir la décision et la couleur en fonction du seuil
         if prob_negative_predict < threshold - 0.05:
             decision_text = "Prêt accordé"
@@ -136,7 +138,6 @@ def handle_predict():
         else:
             decision_text = "Prêt refusé"
             gauge_color = "red"
-
         # Création d'un indicateur de jauge
         fig = go.Figure(go.Indicator(
             domain={'x': [0, 1], 'y': [0, 1]},
@@ -152,21 +153,21 @@ def handle_predict():
                        {'range': [threshold - 0.05, threshold + 0.05], 'color': "orange"},
                        {'range': [threshold + 0.05, 1], 'color': "red"}],
                    'threshold': {'line': {'color': "red", 'width': 3}, 'thickness': 0.75, 'value': threshold}}))
-
         st.session_state['predict_fig_file_path'] = save_to_data(fig, 'predict')
 
 
+# Fonction pour afficher la prédiction.
 def display_result_predict():
-    """Affiche les résultats de la prédiction."""
     st.markdown('<div id="predict"><h1>Prédiction</h1></div>', unsafe_allow_html=True)
     st.image(st.session_state['predict_fig_file_path'], caption="Résultat de prédiction")
 
 
-# Fonction pour expliquer les résultats
+# Fonction pour gérer le clic sur le bouton expliquer.
 def handle_explain_button_click():
     st.session_state['explain'] = True
 
 
+# Fonction pour gérer l'explication'.
 def handle_explain():
     if st.session_state['explain']:
         col1, col2 = st.columns(2)
@@ -193,14 +194,16 @@ def handle_explain():
                 st.error("Une erreur s'est produite lors de la récupération de l'explication globale.")
 
 
+# Fonction pour récupèrer les graphiques SHAP local ou global.
 def get_shap_plot_data(url, mode):
-    """Récupère les données pour le tracé SHAP en mode local ou global."""
     try:
+        # Avoir le graphique en fonction du mode.
         if mode == 'local':
             params = {"customer_id": st.session_state['customer_id']}
             response = requests.get(url, params=params)
         else:
             response = requests.get(url)
+        # Vérifier s'il n'a pas eu de problème avec la requête.
         if response.status_code == 200:
             return response
         else:
@@ -211,8 +214,8 @@ def get_shap_plot_data(url, mode):
         return None
 
 
+# Fonction pour afficher les explications.
 def display_result_explain():
-    """Affiche les explications sous forme d'images."""
     st.markdown('<div id="explain"><h1>Explication</h1></div>', unsafe_allow_html=True)
     col1, col2 = st.columns(2)
     with col1:
@@ -221,14 +224,17 @@ def display_result_explain():
         st.image(st.session_state['explain_global_img_file_path'], caption='Globale')
 
 
-# Gestion du positionnement
+# Fonction pour gérer le bouton positionner.
 def handle_position_button_click():
     st.session_state['position'] = True
     st.session_state['position_page_index'] = 1
 
+# Fonction pour gérer le positionnement.
 def handle_position():
     return
 
+
+# Fonction pour afficher le positionnement.
 def display_result_position():
     st.markdown('<div id="position"><h1>Positionnement</h1></div>', unsafe_allow_html=True)
     # Récuperer la liste de variables
@@ -266,7 +272,7 @@ def display_result_position():
             st.session_state['position_page_index'] = min(page_index + 1, total_pages)
             # Rafraichir la page
             st.rerun()
-    # En cas de sélection
+    # En cas de sélection d'une variable
     if variable_select != "":
         endpoint_position = "/position/"
         params = {"customer_id": st.session_state['customer_id'], "variable": variable_select}
@@ -280,8 +286,9 @@ def display_result_position():
             customers_max_value = response['customers_max_value']
             plot_positioning_graph(customer_value, customers_min_value, customers_max_value, variable_select)
         else:
-            st.error("Une erreur s'est produite lors de la génération du tracé positionnement.")
+            st.error("Une erreur s'est produite lors de la génération du graphique de positionnement.")
 
+# Fonction pour afficher le graphique de positionnement.
 def plot_positioning_graph(customer_value, customers_min_value, customers_max_value, feature):
     # Création des étiquettes pour les barres
     labels = ['Autres clients min', 'Valeur client', 'Autres clients max']
@@ -329,6 +336,7 @@ if st.session_state['customer_found']:
     if st.session_state['position']:
         display_result_position()
 else:
+    # Afficher la page d'acceuil.
     st.image('./data/logo.png')
     intro = "Ceci est une maquette d'application de scoring crédit pour calculer la probabilité qu’un client rembourse son crédit à la consommation pour des personnes ayant peu ou pas du tout d'historique de prêt."
     st.write(f'<p style="font-size:26px; color:blue;">{intro}</p>', unsafe_allow_html=True)
