@@ -338,7 +338,7 @@ if st.session_state['customer_found']:
 else:
     # Afficher la page d'acceuil.
     st.image('./data/logo.png')
-    intro = "Ceci est une maquette d'application de scoring crédit pour calculer la probabilité qu’un client rembourse son crédit à la consommation pour des personnes ayant peu ou pas du tout d'historique de prêt."
+    intro = "Dans l'esprit des valeurs de l'entreprise 'Prêt à dépenser', ce tableau de bord interactif est destiné aux chargés de relation client, afin qu'ils puissent prédire efficacement la classe du client demandeur de crédit à la consommation, prendre une décision d’octroi de crédit, et l'expliquer de manière transparente."
     st.write(f'<p style="font-size:26px; color:blue;">{intro}</p>', unsafe_allow_html=True)
 
 
