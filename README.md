@@ -6,7 +6,7 @@ https://credit-predict-2olkar52da-ew.a.run.app
 
 Réalisée et deployée via Streamlit, se basant sur ce repo à l'adresse:
 
-https://5f3d3koaoh93jmub2dlsuw.streamlit.app
+https://pretadepenserpredictapplication-cu4dlnz9ky4nmzwh8dbhfb.streamlit.app
 
 ## Les dossiers
 
