@@ -49,7 +49,7 @@ def safe_delete_data_files():
             #    st.warning(f"Le fichier associé à {file_key} introuvable.")
 
 def save_to_data(object, mode):
-    directory = "./data"
+    directory = "data"
     if not os.path.exists(directory):
         st.error(f"Dossier '{directory}' n'existe pas.")
         return
