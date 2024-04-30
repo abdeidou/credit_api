@@ -47,7 +47,7 @@ def safe_delete_data_files():
             if os.path.exists(file_path):
                 os.remove(file_path)
 
-# Fonction pour enregistrer les données (en fonction du mode) le répertoire data.
+# Fonction pour enregistrer les données (en fonction du mode) dans le répertoire data.
 def save_to_data(obj, mode):
     directory = "./data"
     if not os.path.exists(directory):
